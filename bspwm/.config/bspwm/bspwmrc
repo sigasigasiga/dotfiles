@@ -1,0 +1,35 @@
+#!/bin/sh
+
+sxhkd -m -1 &
+
+bspc monitor -d I II III IV V VI VII VIII IX X
+
+bspc config border_width			2
+bspc config window_gap				0
+
+bspc config split_ratio				0.5
+bspc config focus_follows_pointer	true
+bspc config initial_polarity		first_child
+bspc config automatic_scheme		spiral
+
+# pointer config
+bspc config pointer_modifier        mod4 # mod4 is super
+bspc config pointer_action1         move
+bspc config pointer_action3         resize_side
+
+# application windows config
+bspc rule -a Zathura state=tiled
+bspc rule -a TelegramDesktop desktop=^2
+bspc rule -a Steam desktop=^9
+
+#
+# autorun
+#
+
+xwallpaper --zoom ~/wallpapers/luna_palma_siluety_206832_1920x1080.jpg 
+telegram-desktop &
+xmodmap -e 'keycode 166='
+xmodmap -e 'keycode 167='
+xmodmap -e 'keycode 135=Super_R'
+xmodmap ~/.xmodmaprc
+polybar example &

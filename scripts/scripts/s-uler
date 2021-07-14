@@ -1,0 +1,91 @@
+#!/bin/sh
+# set your API key in brackets below (you can get it here https://s-ul.eu/account/configurations)
+api_key=""
+
+# required packages:
+# * curl
+# * jq
+# * xclip
+# * maim
+#
+# this script is a modified `puush-linux` created by Sunmock Yang (https://github.com/sunmockyang/)
+
+show_help()
+{
+	printf "Usage:\n"
+	printf "  s-uler [OPTIONS] [PATH]\n"
+	printf "\n"
+	printf "OPTIONS:\n"
+	printf "  -d or --desktop      upload entire desktop\n"
+	printf "  -a or --area         upload an area\n"
+	printf "  -h or --help         show this page\n"
+	printf "\n"
+	printf "PATH:\n"
+	printf "  PATH               optional: path of a file to upload\n"
+	printf "                     (specifying options is needless in this case)\n"
+}
+
+upload_file()
+{
+	if [ -z "$1" ]; then
+		echo "error: no file specified"
+		exit 1
+	elif [ ! -f "$1" ]; then
+		echo "error: upload cancelled"
+		exit 1
+	fi
+
+	json=$(curl https://s-ul.eu/upload.php -F "wizard=true" -F "key=$api_key" -F "gen=3.2" -F "file=@$1")
+
+	proto=$(echo $json | jq '.protocol' -r)
+	domain=$(echo $json | jq '.domain' -r)
+	filename=$(echo $json | jq '.filename' -r)
+	extension=$(echo $json | jq '.extension' -r)
+
+	url="${proto}${domain}/${filename}${extension}"
+
+	if [ ! -z "$url" ]; then
+		printf $url | xclip -selection "clipboard"
+	fi
+}
+
+make_filename()
+{
+	echo "/tmp/s-uler_($(date +"%Y-%m-%d_%I.%M.%S")).png"
+}
+
+if [ -z "$api_key" ]; then
+	echo "error: \$api_key is not set in the shell script"
+	echo "you can find your API key at https://s-ul.eu/account/configurations"
+
+	exit 1
+elif [ -z "$1" ]; then
+	echo "No file entered."
+	show_help
+
+	exit 1
+fi
+
+case "$1" in
+	-d|--desktop)
+		fileName=$(make_filename)
+		maim "$fileName"
+		upload_file "$fileName"
+		;;
+
+	-a|--area)
+		fileName=$(make_filename)
+		maim -s "$fileName"
+		upload_file "$fileName"
+		;;
+
+	-h|--help)
+		show_help
+		exit 0
+		;;
+		
+	*)
+		echo "upload $1"
+			upload_file "$1"
+		;;
+esac
