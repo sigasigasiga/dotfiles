@@ -1,0 +1,8 @@
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+	trustExitCode = true
+[user]
+	email = j@siga.icu
+	name = Yegor Bychin
