@@ -17,7 +17,8 @@ call vundle#begin()
     Plugin 'ericcurtin/CurtineIncSw.vim'
     Plugin 'tpope/vim-surround'
     Plugin 'morhetz/gruvbox'
-	Plugin 'christoomey/vim-tmux-navigator'
+    Plugin 'christoomey/vim-tmux-navigator'
+    Plugin 'tpope/vim-fugitive'
 
     " syntax highlighting
     Plugin 'grisumbras/vim-b2'
@@ -47,12 +48,15 @@ syntax on
 nnoremap gd :LspDefinition<CR>
 nnoremap gD :LspDeclaration<CR>
 nnoremap gl :LspReferences<CR>
+nnoremap gI :LspImplementation<CR>
 " exit terminal by esc
 tnoremap <Esc> <C-\><C-n> 
 " switch between *.c and *.h via CurtineIncSw
 nnoremap gc :call CurtineIncSw()<CR>
 " copy `+<line_number> <filename>`
 nnoremap yp :let @+='+' . line(".") . ' ' . expand("%")<CR>
+" copy `<filename>:<line_number>`
+nnoremap yP :let @+=expand("%") . ':' . line(".")<CR>
 " NERDTree mappings
 nnoremap \nt :NERDTreeToggle<CR>
 nnoremap \nf :NERDTreeFind<CR>
@@ -67,15 +71,14 @@ cmap w!! w !sudo tee > /dev/null %
 
 
 """""" PLUGIN SETTINGS
+" enable human layout for termdebug
 let g:termdebug_wide=1
-" let g:lsp_diagnostics_enabled = 0 "disable lsp errors and warnings
-
 
 """""" GENERAL VIM SETTINGS
 " numbers on left
 set number
 " tab settings (expandtab changes tabs to spaces)
-set tabstop=4 shiftwidth=4 noexpandtab
+set tabstop=4 shiftwidth=4 expandtab
 " autocompletions in command mode
 set wildmenu wildmode=list,longest,full
 " autoindent settings
