@@ -12,7 +12,7 @@ api_key=""
 
 show_help()
 {
-	printf "Usage:\n"
+	printf "usage:\n"
 	printf "  s-uler [OPTIONS] [PATH]\n"
 	printf "\n"
 	printf "OPTIONS:\n"
@@ -43,10 +43,7 @@ upload_file()
 	extension=$(echo $json | jq '.extension' -r)
 
 	url="${proto}${domain}/${filename}${extension}"
-
-	if [ ! -z "$url" ]; then
-		printf $url | xclip -selection "clipboard"
-	fi
+    printf $url | xclip -selection "clipboard"
 }
 
 make_filename()
@@ -60,7 +57,7 @@ if [ -z "$api_key" ]; then
 
 	exit 1
 elif [ -z "$1" ]; then
-	echo "No file entered."
+	echo "error: no file entered."
 	show_help
 
 	exit 1
@@ -68,15 +65,15 @@ fi
 
 case "$1" in
 	-d|--desktop)
-		fileName=$(make_filename)
-		maim "$fileName"
-		upload_file "$fileName"
+		filename=$(make_filename)
+		maim "$filename"
+		upload_file "$filename"
 		;;
 
 	-a|--area)
-		fileName=$(make_filename)
-		maim -s "$fileName"
-		upload_file "$fileName"
+        filename=$(make_filename)
+		maim -s "$filename"
+		upload_file "$filename"
 		;;
 
 	-h|--help)
@@ -86,6 +83,6 @@ case "$1" in
 		
 	*)
 		echo "upload $1"
-			upload_file "$1"
+        upload_file "$1"
 		;;
 esac

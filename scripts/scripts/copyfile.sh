@@ -19,11 +19,14 @@ case $# in
 		xclip -selection clipboard -t "$mime_type" < "$1"
 		;;
 	*)
-		# GNU `realpath` prints full paths of passed files on new line,
+		# GNU `realpath` prints full paths of passed files on new line
+        paths=$(realpath "$@")
+        [ $? -eq 0 ] || { exit 10; }
+
 		# then `sed` appends 'file://' to each line
-		files=$(realpath "$@" | sed "s/^/file:\/\//")
+        uri_list=$(printf "$paths" | sed  "s/^/file:\/\//")
 
 		# copy list of URIs of files into clipboard with mime-type 'text/uri-list'
-		echo "$files" | xclip -selection clipboard -t "text/uri-list"
+		echo "$uri_list" | xclip -selection clipboard -t "text/uri-list"
 		;;
 esac
