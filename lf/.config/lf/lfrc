@@ -79,7 +79,7 @@ cmd zip ${{
 }}
 
 map d
-map dD &trash-put $fx
+map dD $trash-put $fx
 map dd cut
 
 %[ $LF_LEVEL -eq 1 ] || printf "\033[0;30;41mWarning: You're in a nested lf instance"
