@@ -13,12 +13,12 @@ call vundle#begin()
 
     Plugin 'jiangmiao/auto-pairs'
     Plugin 'preservim/nerdtree'
-    Plugin 'preservim/nerdcommenter'
     Plugin 'ericcurtin/CurtineIncSw.vim'
     Plugin 'tpope/vim-surround'
     Plugin 'morhetz/gruvbox'
     Plugin 'christoomey/vim-tmux-navigator'
     Plugin 'tpope/vim-fugitive'
+    Plugin 'lambdalisue/suda.vim'
 
     " syntax highlighting
     Plugin 'grisumbras/vim-b2'
