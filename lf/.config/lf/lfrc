@@ -10,6 +10,8 @@ set ifs "\n"
 set scrolloff 10
 # disable directory contents caching because it may behave incorrectly
 set nodircache
+# update directory contents every 1 second
+set period 1
 
 
 ###### CUSTOM COMMANDS
