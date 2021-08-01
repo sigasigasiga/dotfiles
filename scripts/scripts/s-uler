@@ -12,77 +12,77 @@ api_key=""
 
 show_help()
 {
-	printf "usage:\n"
-	printf "  s-uler [OPTIONS] [PATH]\n"
-	printf "\n"
-	printf "OPTIONS:\n"
-	printf "  -d or --desktop      upload entire desktop\n"
-	printf "  -a or --area         upload an area\n"
-	printf "  -h or --help         show this page\n"
-	printf "\n"
-	printf "PATH:\n"
-	printf "  PATH               optional: path of a file to upload\n"
-	printf "                     (specifying options is needless in this case)\n"
+    printf "usage:\n"
+    printf "  s-uler [OPTIONS] [PATH]\n"
+    printf "\n"
+    printf "OPTIONS:\n"
+    printf "  -d or --desktop      upload entire desktop\n"
+    printf "  -a or --area         upload an area\n"
+    printf "  -h or --help         show this page\n"
+    printf "\n"
+    printf "PATH:\n"
+    printf "  PATH               optional: path of a file to upload\n"
+    printf "                     (specifying options is needless in this case)\n"
 }
 
 upload_file()
 {
-	if [ -z "$1" ]; then
-		echo "error: no file specified"
-		exit 1
-	elif [ ! -f "$1" ]; then
-		echo "error: upload cancelled"
-		exit 1
-	fi
+    if [ -z "$1" ]; then
+        echo "error: no file specified"
+        exit 1
+    elif [ ! -f "$1" ]; then
+        echo "error: upload cancelled"
+        exit 1
+    fi
 
-	json=$(curl https://s-ul.eu/upload.php -F "wizard=true" -F "key=$api_key" -F "gen=3.2" -F "file=@$1")
+    json=$(curl https://s-ul.eu/upload.php -F "wizard=true" -F "key=$api_key" -F "gen=3.2" -F "file=@$1")
 
-	proto=$(echo $json | jq '.protocol' -r)
-	domain=$(echo $json | jq '.domain' -r)
-	filename=$(echo $json | jq '.filename' -r)
-	extension=$(echo $json | jq '.extension' -r)
+    proto=$(echo $json | jq '.protocol' -r)
+    domain=$(echo $json | jq '.domain' -r)
+    filename=$(echo $json | jq '.filename' -r)
+    extension=$(echo $json | jq '.extension' -r)
 
-	url="${proto}${domain}/${filename}${extension}"
+    url="${proto}${domain}/${filename}${extension}"
     printf $url | xclip -selection "clipboard"
 }
 
 make_filename()
 {
-	echo "/tmp/s-uler_($(date +"%Y-%m-%d_%I.%M.%S")).png"
+    echo "/tmp/s-uler_($(date +"%Y-%m-%d_%I.%M.%S")).png"
 }
 
 if [ -z "$api_key" ]; then
-	echo "error: \$api_key is not set in the shell script"
-	echo "you can find your API key at https://s-ul.eu/account/configurations"
+    echo "error: \$api_key is not set in the shell script"
+    echo "you can find your API key at https://s-ul.eu/account/configurations"
 
-	exit 1
+    exit 1
 elif [ -z "$1" ]; then
-	echo "error: no file entered."
-	show_help
+    echo "error: no file entered."
+    show_help
 
-	exit 1
+    exit 1
 fi
 
 case "$1" in
-	-d|--desktop)
-		filename=$(make_filename)
-		maim "$filename"
-		upload_file "$filename"
-		;;
-
-	-a|--area)
+    -d|--desktop)
         filename=$(make_filename)
-		maim -s "$filename"
-		upload_file "$filename"
-		;;
+        maim "$filename"
+        upload_file "$filename"
+        ;;
 
-	-h|--help)
-		show_help
-		exit 0
-		;;
-		
-	*)
-		echo "upload $1"
+    -a|--area)
+        filename=$(make_filename)
+        maim -s "$filename"
+        upload_file "$filename"
+        ;;
+
+    -h|--help)
+        show_help
+        exit 0
+        ;;
+
+    *)
+        echo "upload $1"
         upload_file "$1"
-		;;
+        ;;
 esac

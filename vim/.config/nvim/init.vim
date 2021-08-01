@@ -31,7 +31,6 @@ call vundle#begin()
         Plugin 'prabirshrestha/vim-lsp'
         Plugin 'mattn/vim-lsp-settings'
     endif
-
 call vundle#end()
 filetype plugin indent on
 
@@ -66,8 +65,6 @@ nnoremap \nf :NERDTreeFind<CR>
 command VST vsplit +term
 " clear search highlight
 command CS let @/ = ""
-" save as sudo (not sure if it works)
-cmap w!! w !sudo tee > /dev/null % 
 
 
 """""" PLUGIN SETTINGS
@@ -75,6 +72,8 @@ cmap w!! w !sudo tee > /dev/null %
 let g:termdebug_wide=1
 
 """""" GENERAL VIM SETTINGS
+" execute `.nvimrc` in project root (and do it securely)
+set exrc secure
 " numbers on left
 set number
 " tab settings (expandtab changes tabs to spaces)
