@@ -19,6 +19,8 @@ bspc config pointer_action3         resize_side
 
 # application windows config
 bspc rule -a Zathura state=tiled
+
+bspc rule -a Firefox desktop=^1
 bspc rule -a TelegramDesktop desktop=^2
 bspc rule -a Steam desktop=^9
 
