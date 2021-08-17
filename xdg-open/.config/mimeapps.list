@@ -16,6 +16,8 @@ image/gif=mpv.desktop
 image/jpeg=imv.desktop
 image/png=imv.desktop
 application/pdf=org.pwmt.zathura-pdf-poppler.desktop
+audio/mpeg=mpv.desktop
+audio/mp3=mpv.desktop
 
 [Added Associations]
 x-scheme-handler/tg=userapp-Telegram Desktop-RWCE30.desktop;
