@@ -71,6 +71,7 @@ command CS let @/ = ""
 " enable human layout for termdebug
 let g:termdebug_wide=1
 
+
 """""" GENERAL VIM SETTINGS
 " execute `.nvimrc` in project root (and do it securely)
 set exrc secure
@@ -95,3 +96,5 @@ set clipboard=unnamed,unnamedplus mouse=a
 set matchpairs+=<:>
 " fuzzy finder (use with `:find`)
 set path+=**
+" do not fold file by default
+set nofoldenable
