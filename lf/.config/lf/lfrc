@@ -9,7 +9,7 @@ set ifs "\n"
 # leave some space at the top and the bottom of the screen
 set scrolloff 10
 # disable directory contents caching because it may behave incorrectly
-set nodircache
+set dircache
 # update directory contents every 1 second
 set period 1
 
@@ -23,6 +23,7 @@ cmd open ${{
         *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
     esac
 }}
+
 # extract the current file with the right command
 cmd extract ${{
     set -f
@@ -35,16 +36,21 @@ cmd extract ${{
         *.7z) 7z x $f;;
     esac
 }}
+
 # copies file(s) to clipboard. relies on `copyfile.sh` script in my dotfiles
 cmd copyfile $~/scripts/copyfile.sh $fx
+
+# convenience cmd to quit
+cmd q quit
 
 
 ###### KEYBOARD MAPPINGS
 
 # map deletion commands
 map d
-map dD $trash-put $fx
+map dD &trash-put $fx
 map dd cut
+
 # map yank commands
 map y
 map yy copy
