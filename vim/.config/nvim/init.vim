@@ -81,8 +81,13 @@ set number
 set tabstop=4 shiftwidth=4 expandtab
 " autocompletions in command mode
 set wildmenu wildmode=list,longest,full
-" autoindent settings
-set ai cin cinoptions=g-1
+" autoindent settings. cinoptions are fucky, so tldr:
+" `l1` = don't fuck up curly braces in `case`
+" `g0` = `private`, `public`, `protected` not indented
+" `N-s` = namespaces not indented
+" `(0,W4` = `void foo( /* next line is 4 space indented`
+" `(s,m1` = `void foo(` will have `)` on beginning of the next line
+set ai cin cinoptions=l1,g0,N-s,(0,W4,(s,m1
 " long lines will be wrapped onto next line
 set linebreak wrap
 " search config
