@@ -1,0 +1,4 @@
+*
+# ignore all plugins in this folder except vundle
+!.gitignore
+!Vundle.vim
