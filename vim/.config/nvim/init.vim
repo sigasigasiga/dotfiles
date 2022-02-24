@@ -62,7 +62,6 @@ nnoremap \nf :NERDTreeFind<CR>
 
 
 """""" CUSTOM COMMANDS
-command VST vsplit +term
 " clear search highlight
 command CS let @/ = ""
 
