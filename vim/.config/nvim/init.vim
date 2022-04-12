@@ -22,7 +22,7 @@ call vundle#begin()
 
     " syntax highlighting
     Plugin 'grisumbras/vim-b2'
-    Plugin 'octol/vim-cpp-enhanced-highlight'
+    Plugin 'bfrg/vim-cpp-modern'
     Plugin 'dag/vim-fish'
     Plugin 'jneen/ragel.vim'
 
