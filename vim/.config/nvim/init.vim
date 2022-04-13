@@ -84,9 +84,10 @@ set wildmenu wildmode=list,longest,full
 " `l1` = don't fuck up curly braces in `case`
 " `g0` = `private`, `public`, `protected` not indented
 " `N-s` = namespaces not indented
-" `(0,W4` = `void foo( /* next line is 4 space indented`
-" `(s,m1` = `void foo(` will have `)` on beginning of the next line
-set ai cin cinoptions=l1,g0,N-s,(0,W4,(s,m1
+" `(0,W4` = `void foo(<CR> /* next line is 4 space indented`
+" `(s,m1` = `void foo(<CR>` will have `)` on beginning of the next line
+" `j1` = don't fuck up lambda definitions in an argument list
+set ai cin cinoptions=l1,g0,N-s,(0,W4,(s,m1,j1
 " long lines will be wrapped onto next line
 set linebreak wrap
 " search config
