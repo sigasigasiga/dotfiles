@@ -71,23 +71,33 @@ command CS let @/ = ""
 let g:termdebug_wide=1
 
 
+"""""" CODESTYLE INIT FUNCTIONS
+function GnuCodeStyle()
+    set tabstop=8 shiftwidth=2 softtabstop=2 noexpandtab
+    set cin cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
+endfunction
+
+function DrwCodeStyle()
+    " tab settings (expandtab changes tabs to spaces)
+    set tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+    " autoindent settings. cinoptions are fucky, so tldr:
+    " `l1` = don't fuck up curly braces in `case`
+    " `g0` = `private`, `public`, `protected` not indented
+    " `N-s` = namespaces not indented
+    " `(0,W4` = `void foo(<CR> /* next line is 4 space indented`
+    " `(s,m1` = `void foo(<CR>` will have `)` on beginning of the next line
+    " `j1` = don't fuck up lambda definitions in an argument list
+    set ai cin cinoptions=l1,g0,N-s,(0,W4,(s,m1,j1
+endfunction
+
+
 """""" GENERAL VIM SETTINGS
 " execute `.nvimrc` in project root (and do it securely)
 set exrc secure
 " numbers on left
 set number
-" tab settings (expandtab changes tabs to spaces)
-set tabstop=4 shiftwidth=4 expandtab
 " autocompletions in command mode
 set wildmenu wildmode=list,longest,full
-" autoindent settings. cinoptions are fucky, so tldr:
-" `l1` = don't fuck up curly braces in `case`
-" `g0` = `private`, `public`, `protected` not indented
-" `N-s` = namespaces not indented
-" `(0,W4` = `void foo(<CR> /* next line is 4 space indented`
-" `(s,m1` = `void foo(<CR>` will have `)` on beginning of the next line
-" `j1` = don't fuck up lambda definitions in an argument list
-set ai cin cinoptions=l1,g0,N-s,(0,W4,(s,m1,j1
 " long lines will be wrapped onto next line
 set linebreak wrap
 " search config
@@ -103,3 +113,5 @@ set matchpairs+=<:>
 set path+=**
 " do not fold file by default
 set nofoldenable
+" set codestyle
+call DrwCodeStyle()
