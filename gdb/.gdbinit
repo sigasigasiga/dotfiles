@@ -1,3 +1,6 @@
+# enable multi-thread symbol loading (works on GDB 9.1+)
+maint set worker-threads unlimited
+
 # disable `press c to continue listing`
 set pagination off
 
