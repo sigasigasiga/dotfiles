@@ -10,3 +10,8 @@ set print object on
 # do not step into library routines
 skip -rfu std::.*
 skip -rfu boost::.*
+
+# function that prints fault address
+define faultaddr
+print $_siginfo._sifields._sigfault.si_addr
+end
