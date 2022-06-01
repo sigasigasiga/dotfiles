@@ -74,7 +74,7 @@ let g:termdebug_wide=1
 """""" CODESTYLE INIT FUNCTIONS
 function GnuCodeStyle()
     set tabstop=8 shiftwidth=2 softtabstop=2 noexpandtab
-    set cin cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
+    set ai cin cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
 endfunction
 
 function DrwCodeStyle()
