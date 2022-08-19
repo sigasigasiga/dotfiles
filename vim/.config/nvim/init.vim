@@ -2,6 +2,13 @@
 """"""""""""""""""""""""""""""""""""".vimrc"""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""" ENVIRONMENT VARIABLES
+" small workaround to make clangd work on my ubuntu 22.04 machine
+" also make sure that it won't work on my macos machine
+if has('unix') && !has('mac')
+    let $CPLUS_INCLUDE_PATH='/usr/lib/llvm-14/include/c++/v1/'
+endif
+
 """""" PLUGIN INSTALLATION
 set nocompatible
 filetype off
