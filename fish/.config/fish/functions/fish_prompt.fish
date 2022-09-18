@@ -26,7 +26,7 @@ function fish_prompt --description 'Write out the prompt'
     # default prompt
     echo -n -s \
         "$user_color$USER$normal_color@$host_color$hostname" $normal_color ' '      (: user@host)       \
-        (set_color $pwd_color) (prompt_pwd -d 0) $normal_color                      (: ~/path/name)     \
+        (set_color $pwd_color) $PWD $normal_color                                   (: /home/user/)     \
         (fish_vcs_prompt) $normal_color                                             (: git branch name) \
         $prompt_status \n                                                           (: exit code)       \
         $suffix " "                                                                 (: '>' prompt)
