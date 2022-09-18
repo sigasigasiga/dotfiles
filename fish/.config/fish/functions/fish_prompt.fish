@@ -1,15 +1,16 @@
 function fish_prompt --description 'Write out the prompt'
     set -l last_pipestatus $pipestatus
-    set -l normal (set_color normal)
-    set -l user_color -o yellow
+    set -l normal_color (set_color normal)
+    set -l user_color (set_color -o yellow)
+    set -l host_color (set_color magenta)
 
     # Color the prompt differently when we're root
-    set -l color_cwd $fish_color_cwd
+    set -l pwd_color $fish_color_cwd
     set -l prefix
     set -l suffix '>'
     if contains -- $USER root toor
         if set -q fish_color_cwd_root
-            set color_cwd $fish_color_cwd_root
+            set pwd_color $fish_color_cwd_root
         end
         set suffix '#'
     end
@@ -24,5 +25,10 @@ function fish_prompt --description 'Write out the prompt'
     set -l prompt_status (__fish_print_pipestatus " [" "]" "|" (set_color $fish_color_status) (set_color --bold $fish_color_status) $last_pipestatus)
 
     # default prompt
-    echo -n -s (set_color $user_color) "$USER" $normal ' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal $prompt_status \n $suffix " "
+    echo -n -s \
+        "$user_color$USER$normal_color@$host_color$hostname" $normal_color ' '      (: user@host)       \
+        (set_color $pwd_color) (prompt_pwd -d 0) $normal_color                      (: ~/path/name)     \
+        (fish_vcs_prompt) $normal_color                                             (: git branch name) \
+        $prompt_status \n                                                           (: exit code)       \
+        $suffix " "                                                                 (: '>' prompt)
 end
