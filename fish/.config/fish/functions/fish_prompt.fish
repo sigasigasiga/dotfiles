@@ -2,7 +2,6 @@ function fish_prompt --description 'Write out the prompt'
     set -l last_pipestatus $pipestatus
     set -l normal_color (set_color normal)
     set -l user_color (set_color -o yellow)
-    set -l host_color (set_color magenta)
 
     # Color the prompt differently when we're root
     set -l pwd_color $fish_color_cwd
@@ -16,9 +15,9 @@ function fish_prompt --description 'Write out the prompt'
     end
 
     # If we're running via SSH, change the host color.
-    set -l color_host $fish_color_host
+    set -l host_color (set_color magenta)
     if set -q SSH_TTY
-        set color_host $fish_color_host_remote
+        set host_color (set_color cyan)
     end
 
     # Write pipestatus
