@@ -20,7 +20,7 @@ call vundle#begin()
 
     Plugin 'jiangmiao/auto-pairs'
     Plugin 'preservim/nerdtree'
-    Plugin 'ericcurtin/CurtineIncSw.vim'
+    Plugin 'vim-scripts/a.vim'
     Plugin 'tpope/vim-surround'
     Plugin 'morhetz/gruvbox'
     Plugin 'christoomey/vim-tmux-navigator'
@@ -57,8 +57,8 @@ nnoremap gl :LspReferences<CR>
 nnoremap gI :LspImplementation<CR>
 " exit terminal by esc
 tnoremap <Esc> <C-\><C-n> 
-" switch between *.c and *.h via CurtineIncSw
-nnoremap gc :call CurtineIncSw()<CR>
+" switch between *.c and *.h via A.vim
+nnoremap gc :A<CR>
 " copy `+<line_number> <filename>`
 nnoremap yp :let @+='+' . line(".") . ' ' . expand("%")<CR>
 " copy `<filename>:<line_number>`
@@ -113,7 +113,7 @@ set showmatch hlsearch incsearch
 " two commands)
 set keymap=russian-jcukenwin iminsert=0 imsearch=0
 " Xorg settings
-set clipboard=unnamed,unnamedplus mouse=a
+set clipboard=unnamedplus mouse=a
 " angle brackets matching behaviour
 set matchpairs+=<:>
 " fuzzy finder (use with `:find`)
