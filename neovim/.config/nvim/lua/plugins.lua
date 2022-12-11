@@ -11,7 +11,10 @@ return require('packer').startup(function(use)
         config = function()
             require('lspconfig').clangd.setup{
                 -- TODO: set those in a separate file
-                on_attach = function()
+                on_attach = function(client, bufnr)
+                    -- enable autocompletion via <c-x><c-o>
+                    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
                     local bufopts = { noremap=true, silent=true }
                     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
                     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)

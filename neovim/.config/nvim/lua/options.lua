@@ -23,6 +23,8 @@ for k, v in pairs(options) do
     vim.opt[k] = v
 end
 
+-- FIXME: i dont know why but these settings cannot be set reliably via lua
+vim.cmd[[set iminsert=0 imsearch=0]]
 
 -- angle brackets matching behaviour
 vim.opt.matchpairs:append('<:>')
