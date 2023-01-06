@@ -21,6 +21,26 @@ return require('packer').startup(function(use)
                     vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, bufopts)
                     vim.keymap.set('n', 'gl', vim.lsp.buf.references, bufopts)
                     vim.keymap.set('n', 'gc', ':ClangdSwitchSourceHeader<CR>', bufopts)
+
+                    if client.server_capabilities.documentHighlightProvider then
+                        -- number of milliseconds needed for highlight to appear
+                        vim.opt.updatetime = 250
+
+                        vim.api.nvim_create_augroup('lsp_document_highlight', { clear = true })
+                        vim.api.nvim_clear_autocmds { buffer = bufnr, group = 'lsp_document_highlight' }
+                        vim.api.nvim_create_autocmd('CursorHold', {
+                            callback = vim.lsp.buf.document_highlight,
+                            buffer = bufnr,
+                            group = 'lsp_document_highlight',
+                            desc = 'Document Highlight',
+                        })
+                        vim.api.nvim_create_autocmd('CursorMoved', {
+                            callback = vim.lsp.buf.clear_references,
+                            buffer = bufnr,
+                            group = 'lsp_document_highlight',
+                            desc = 'Clear All the References',
+                        })
+                    end
                 end
             }
         end
@@ -29,8 +49,8 @@ return require('packer').startup(function(use)
     use {
         'ellisonleao/gruvbox.nvim',
         config = function()
-            vim.o.background = "dark"
-            vim.cmd([[colorscheme gruvbox]])
+            vim.o.background = 'dark'
+            vim.cmd.colorscheme('gruvbox')
         end
     }
 
