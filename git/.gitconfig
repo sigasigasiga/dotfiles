@@ -1,8 +1,13 @@
+[user]
+    email = j@siga.icu
+    name = Yegor Bychin
+
 [diff]
-	tool = vimdiff
+    tool = nvimdiff
+
 [difftool]
 	prompt = false
-	trustExitCode = true
-[user]
-	email = j@siga.icu
-	name = Yegor Bychin
+    trustExitCode = true
+
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
