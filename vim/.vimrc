@@ -29,7 +29,6 @@ call vundle#begin()
 
     " syntax highlighting
     Plugin 'grisumbras/vim-b2'
-    Plugin 'bfrg/vim-cpp-modern'
     Plugin 'dag/vim-fish'
     Plugin 'jneen/ragel.vim'
 
@@ -46,6 +45,7 @@ packadd termdebug
 
 """""" COLORSCHEME
 colorscheme gruvbox
+set background=dark
 syntax on
 
 
