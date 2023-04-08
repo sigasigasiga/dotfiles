@@ -26,7 +26,7 @@ return require('packer').startup(function(use)
                         -- number of milliseconds needed for highlight to appear
                         vim.opt.updatetime = 250
 
-                        vim.api.nvim_create_augroup('lsp_document_highlight', { clear = true })
+                        vim.api.nvim_create_augroup('lsp_document_highlight', { clear = false })
                         vim.api.nvim_clear_autocmds { buffer = bufnr, group = 'lsp_document_highlight' }
                         vim.api.nvim_create_autocmd('CursorHold', {
                             callback = vim.lsp.buf.document_highlight,
@@ -55,6 +55,16 @@ return require('packer').startup(function(use)
     use {
         'ellisonleao/gruvbox.nvim',
         config = function()
+            local gray = '#504945'
+
+            require('gruvbox').setup({
+                overrides = {
+                    LspReferenceRead = {bg = gray},
+                    LspReferenceText = {bg = gray},
+                    LspReferenceWrite = {bg = gray},
+                }
+            })
+
             vim.o.background = 'dark'
             vim.cmd.colorscheme('gruvbox')
         end
