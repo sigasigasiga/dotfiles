@@ -34,6 +34,12 @@ return require('packer').startup(function(use)
                             group = 'lsp_document_highlight',
                             desc = 'Document Highlight',
                         })
+                        vim.api.nvim_create_autocmd('CursorHoldI', {
+                            callback = vim.lsp.buf.document_highlight,
+                            buffer = bufnr,
+                            group = 'lsp_document_highlight',
+                            desc = 'Document Highlight',
+                        })
                         vim.api.nvim_create_autocmd('CursorMoved', {
                             callback = vim.lsp.buf.clear_references,
                             buffer = bufnr,
