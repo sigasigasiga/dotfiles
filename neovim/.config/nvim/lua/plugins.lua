@@ -1,7 +1,6 @@
 vim.cmd([[packadd termdebug]])
 
 return require('packer').startup(function(use)
-    -- TODO: add packer submodule
     use {
         'wbthomason/packer.nvim'
     }
