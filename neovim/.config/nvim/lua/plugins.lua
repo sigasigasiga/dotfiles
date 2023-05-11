@@ -60,13 +60,13 @@ return require('packer').startup(function(use)
         config = function()
             local gray = '#504945'
 
-            require('gruvbox').setup({
+            require('gruvbox').setup{
                 overrides = {
                     LspReferenceRead = {bg = gray},
                     LspReferenceText = {bg = gray},
                     LspReferenceWrite = {bg = gray},
                 }
-            })
+            }
 
             vim.o.background = 'dark'
             vim.cmd.colorscheme('gruvbox')
@@ -107,7 +107,19 @@ return require('packer').startup(function(use)
     use {
         'nvim-tree/nvim-tree.lua',
         config = function()
-            require('nvim-tree').setup()
+            require('nvim-tree').setup{
+                renderer = {
+                    icons = {
+                        show = {
+                            file = false,
+                            folder = false,
+                            folder_arrow = false,
+                            git = false
+                        }
+                    }
+                }
+            }
+
             -- TODO: set keymaps in a separate config file
             vim.api.nvim_set_keymap('n', '\\nt', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
             vim.api.nvim_set_keymap('n', '\\nf', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
