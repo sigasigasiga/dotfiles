@@ -21,6 +21,10 @@ return require('packer').startup(function(use)
                     vim.keymap.set('n', 'gl', vim.lsp.buf.references, bufopts)
                     vim.keymap.set('n', 'gc', ':ClangdSwitchSourceHeader<CR>', bufopts)
 
+                    vim.api.nvim_create_user_command('DiagList', vim.diagnostic.setloclist, {})
+                    vim.api.nvim_create_user_command('DiagEnable', vim.diagnostic.enable, {})
+                    vim.api.nvim_create_user_command('DiagDisable', vim.diagnostic.disable, {})
+
                     if client.server_capabilities.documentHighlightProvider then
                         -- number of milliseconds needed for highlight to appear
                         vim.opt.updatetime = 250
