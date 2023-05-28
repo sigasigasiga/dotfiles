@@ -99,8 +99,6 @@ endfunction
 
 
 """""" GENERAL VIM SETTINGS
-" execute `.nvimrc` in project root (and do it securely)
-set exrc secure
 " numbers on left
 set number
 " autocompletions in command mode

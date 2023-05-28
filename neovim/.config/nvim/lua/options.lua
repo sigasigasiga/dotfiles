@@ -1,6 +1,4 @@
 local options = {
-    -- execute `.nvimrc` in project root (and do it securely)
-    exrc = true, secure = true,
     -- numbers on the left
     number = true,
     -- autocompletions in command mode
