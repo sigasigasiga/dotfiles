@@ -32,3 +32,7 @@ vim.opt.path:append('**')
 
 -- clear search results
 vim.api.nvim_create_user_command('CS', 'let @/ = ""', {})
+
+-- show whitespace characters as little dots
+vim.opt.list = true
+vim.opt.lcs:append('space:·')
