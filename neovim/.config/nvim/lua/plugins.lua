@@ -21,9 +21,15 @@ return require('packer').startup(function(use)
                     vim.keymap.set('n', 'gl', vim.lsp.buf.references, bufopts)
                     vim.keymap.set('n', 'gc', ':ClangdSwitchSourceHeader<CR>', bufopts)
 
-                    vim.api.nvim_create_user_command('DiagList', vim.diagnostic.setloclist, {})
-                    vim.api.nvim_create_user_command('DiagEnable', vim.diagnostic.enable, {})
-                    vim.api.nvim_create_user_command('DiagDisable', vim.diagnostic.disable, {})
+                    local ignore_args_wrapper = function(f)
+                        return function()
+                            f()
+                        end
+                    end
+
+                    vim.api.nvim_create_user_command('DiagList', ignore_args_wrapper(vim.diagnostic.setloclist), {})
+                    vim.api.nvim_create_user_command('DiagEnable', ignore_args_wrapper(vim.diagnostic.enable), {})
+                    vim.api.nvim_create_user_command('DiagDisable', ignore_args_wrapper(vim.diagnostic.disable), {})
 
                     if client.server_capabilities.documentHighlightProvider then
                         -- number of milliseconds needed for highlight to appear
@@ -35,19 +41,31 @@ return require('packer').startup(function(use)
                             callback = vim.lsp.buf.document_highlight,
                             buffer = bufnr,
                             group = 'lsp_document_highlight',
-                            desc = 'Document Highlight',
+                            desc = 'Document highlight',
                         })
                         vim.api.nvim_create_autocmd('CursorHoldI', {
                             callback = vim.lsp.buf.document_highlight,
                             buffer = bufnr,
                             group = 'lsp_document_highlight',
-                            desc = 'Document Highlight',
+                            desc = 'Document highlight',
                         })
                         vim.api.nvim_create_autocmd('CursorMoved', {
                             callback = vim.lsp.buf.clear_references,
                             buffer = bufnr,
                             group = 'lsp_document_highlight',
-                            desc = 'Clear All the References',
+                            desc = 'Clear all the references',
+                        })
+                    end
+
+                    if client.server_capabilities.documentFormattingProvider then
+                        vim.api.nvim_create_augroup('lsp_format', { clear = false })
+                        vim.api.nvim_clear_autocmds { buffer = bufnr, group = 'lsp_format' }
+                        vim.api.nvim_create_autocmd('BufWritePre', {
+                            -- I don't know why is it needed to wrap the callback but it is what it is
+                            callback = function() vim.lsp.buf.format() end,
+                            buffer = bufnr,
+                            group = 'lsp_format',
+                            desc = 'Format document on write'
                         })
                     end
                 end
@@ -69,9 +87,17 @@ return require('packer').startup(function(use)
             }
 
             vim.o.background = 'dark'
-            vim.cmd.colorscheme('gruvbox')
         end
     }
+
+    use {
+        'EdenEast/nightfox.nvim',
+        config = function()
+            -- TODO: automatically choose gruvbox when the OS theme is dark
+            vim.cmd('colorscheme dawnfox')
+        end
+    }
+    
 
     use {
         'windwp/nvim-autopairs',
