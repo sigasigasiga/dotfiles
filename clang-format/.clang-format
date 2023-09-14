@@ -45,7 +45,7 @@ BraceWrapping:
   AfterClass: true
   AfterControlStatement: Never
   AfterEnum: true
-  AfterFunction: true
+  AfterFunction: false
   AfterNamespace: false
   AfterStruct: true
   AfterUnion: true
@@ -65,7 +65,7 @@ BreakBeforeConceptDeclarations: Always
 BreakBeforeInlineASMColon: OnlyMultiline # MAY CAUSE PROBLEMS!!!
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
-BreakInheritanceList: BeforeComma
+BreakInheritanceList: AfterComma
 BreakStringLiterals: false
 ColumnLimit: 80
 CompactNamespaces: false
