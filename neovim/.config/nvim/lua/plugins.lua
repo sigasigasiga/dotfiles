@@ -8,18 +8,23 @@ return require('packer').startup(function(use)
     use {
         'neovim/nvim-lspconfig',
         config = function()
-            require('lspconfig').clangd.setup{
-                -- TODO: set those in a separate file
-                on_attach = function(client, bufnr)
-                    -- enable autocompletion via <c-x><c-o>
-                    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+            -- TODO: set those in a separate file
+            lspconfig = require('lspconfig')
+
+            vim.api.nvim_create_autocmd('LspAttach', {
+                group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+                callback = function(event)
+                    local bufnr = event.buf
+                    local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+                    -- Enable completion triggered by <c-x><c-o>
+                    vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
                     local bufopts = { noremap=true, silent=true }
                     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
                     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
                     vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, bufopts)
                     vim.keymap.set('n', 'gl', vim.lsp.buf.references, bufopts)
-                    vim.keymap.set('n', 'gc', ':ClangdSwitchSourceHeader<CR>', bufopts)
 
                     local ignore_args_wrapper = function(f)
                         return function()
@@ -59,7 +64,7 @@ return require('packer').startup(function(use)
 
                     if client.server_capabilities.documentFormattingProvider then
                         vim.api.nvim_create_augroup('lsp_format', { clear = false })
-                        vim.api.nvim_clear_autocmds { buffer = bufnr, group = 'lsp_format' }
+                        vim.api.nvim_clear_autocmds{ buffer = bufnr, group = 'lsp_format' }
                         vim.api.nvim_create_autocmd('BufWritePre', {
                             -- I don't know why is it needed to wrap the callback but it is what it is
                             callback = function() vim.lsp.buf.format() end,
@@ -68,8 +73,16 @@ return require('packer').startup(function(use)
                             desc = 'Format document on write'
                         })
                     end
+                end,
+            })
+
+            lspconfig.clangd.setup{
+                on_attach = function(client, bufnr)
+                    vim.keymap.set('n', 'gc', ':ClangdSwitchSourceHeader<CR>', { noremap=true, silent=true })
                 end
             }
+
+            lspconfig.pylsp.setup{}
         end
     }
 
