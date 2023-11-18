@@ -82,7 +82,7 @@ return require('packer').startup(function(use)
                 end
             }
 
-            lspconfig.pylsp.setup{}
+            lspconfig.pyright.setup{}
         end
     }
 
