@@ -100,6 +100,7 @@ return require('packer').startup(function(use)
             }
 
             vim.o.background = 'dark'
+            vim.cmd('colorscheme gruvbox')
         end
     }
 
@@ -107,7 +108,7 @@ return require('packer').startup(function(use)
         'EdenEast/nightfox.nvim',
         config = function()
             -- TODO: automatically choose gruvbox when the OS theme is dark
-            vim.cmd('colorscheme dawnfox')
+            --vim.cmd('colorscheme dawnfox')
         end
     }
     
