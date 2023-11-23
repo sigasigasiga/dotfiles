@@ -10,6 +10,6 @@
     trustExitCode = true
 
 [difftool "nvimdiff"]
-    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+    cmd = "nvim -dM \"$LOCAL\" \"$REMOTE\""
 [alias]
 	showtool = "!showci () { rev=$(git rev-parse \"${*:-HEAD}\"); git difftool $rev~1 $rev; }; showci"
