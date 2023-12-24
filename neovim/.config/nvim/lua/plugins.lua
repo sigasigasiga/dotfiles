@@ -1,4 +1,5 @@
 vim.cmd([[packadd termdebug]])
+require('plugins.dark_monitor')
 
 return require('packer').startup(function(use)
     use {
@@ -100,18 +101,12 @@ return require('packer').startup(function(use)
             }
 
             vim.o.background = 'dark'
-            vim.cmd('colorscheme gruvbox')
         end
     }
 
     use {
-        'EdenEast/nightfox.nvim',
-        config = function()
-            -- TODO: automatically choose gruvbox when the OS theme is dark
-            --vim.cmd('colorscheme dawnfox')
-        end
+        'EdenEast/nightfox.nvim'
     }
-    
 
     use {
         'windwp/nvim-autopairs',
