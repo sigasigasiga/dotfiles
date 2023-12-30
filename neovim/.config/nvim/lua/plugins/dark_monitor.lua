@@ -3,7 +3,7 @@ if next(dark_monitor_exe) == nil then
     return
 end
 
-local current_os = vim.loop.os_uname().sysname
+local current_os = vim.loop.os_uname()
 if os.getenv('XDG_SESSION_TYPE') == 'tty' then
     return
 end
@@ -14,8 +14,13 @@ end
 -- This is a subject to change on the Neovim side, because Windows has added a support
 -- for `AF_UNIX` sockets since 2018 (more info: https://github.com/neovim/neovim/issues/11363 ),
 -- but currently we have to work this around by spawning an IP socket manually.
-if current_os:find('Windows') and vim.v.servername:find('\\\\.\\pipe') == 1 then
-    local server = '127.0.0.1:18623' -- the port was chosen arbitrarily
+--
+-- Under WSL we need to run the Win32 executable to make it actually work, but Win32 applications
+-- cannot connect to the UNIX sockets that are spawned in the VM, so we also have to spawn an IP socket
+local is_windows_pipes = current_os.sysname:find('Windows') and vim.v.servername:find('\\\\.\\pipe') == 1
+local is_wsl = current_os.release:find('WSL')
+if is_windows_pipes or is_wsl then
+    local server = '127.0.0.1:0' -- the port was chosen arbitrarily
 
     -- When we call `serverstart`, the new server socket is added to the end of
     -- the `serverlist()` and there's no way to do that the other way.
