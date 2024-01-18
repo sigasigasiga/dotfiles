@@ -48,6 +48,7 @@
     {
         "defaults": 
         {
+            "closeOnExit": "graceful",
             "colorScheme": 
             {
                 "dark": "Gruvbox Dark [Soft]",
