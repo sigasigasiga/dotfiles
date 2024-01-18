@@ -78,6 +78,7 @@ return require('packer').startup(function(use)
             })
 
             lspconfig.clangd.setup{
+                cmd = { 'clangd', '--fallback-style=none' },
                 on_attach = function(client, bufnr)
                     vim.keymap.set('n', 'gc', ':ClangdSwitchSourceHeader<CR>', { noremap=true, silent=true })
                 end
