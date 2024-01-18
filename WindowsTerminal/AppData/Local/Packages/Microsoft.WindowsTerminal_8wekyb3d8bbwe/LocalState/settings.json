@@ -22,10 +22,6 @@
             "command": "paste"
         },
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": 
             {
                 "action": "splitPane",
@@ -33,6 +29,10 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
         }
     ],
     "copyFormatting": "none",
@@ -48,7 +48,11 @@
     {
         "defaults": 
         {
-            "colorScheme": { "light": "dawnfox", "dark": "Gruvbox Dark [Soft]" },
+            "colorScheme": 
+            {
+                "dark": "Gruvbox Dark [Soft]",
+                "light": "dawnfox"
+            },
             "cursorShape": "filledBox",
             "experimental.retroTerminalEffect": false,
             "font": 
@@ -69,12 +73,6 @@
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "Command Prompt"
-            },
-            {
-                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
-                "hidden": false,
-                "name": "Git Bash",
-                "source": "Git"
             },
             {
                 "commandline": "\"C:\\Program Files\\PowerShell\\7\\pwsh.exe\" -noe -c \"&{Import-Module \"\"\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Professional\\Common7\\Tools\\Microsoft.VisualStudio.DevShell.dll\"\"\"; Enter-VsDevShell bb73eaa2}\"",
@@ -100,6 +98,31 @@
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,
                 "name": "Legacy PowerShell"
+            },
+            {
+                "guid": "{88cbe418-373d-525e-b608-75a997300122}",
+                "hidden": false,
+                "name": "Developer Command Prompt for VS 2022 (2)",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{f27c8d38-4130-5a13-8d25-8bf23d0a5b94}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 2022 (2)",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{16208362-94fc-5b1f-a491-5b2624d5ab56}",
+                "hidden": true,
+                "name": "Visual Studio Debug Console",
+                "source": "VSDebugConsole"
+            },
+            {
+                "commandline": "\"C:\\Program Files\\Git\\bin\\bash.exe\"",
+                "guid": "{1e61c916-d6d2-4a2b-855e-b3019878c76c}",
+                "hidden": false,
+                "name": "bash",
+                "startingDirectory": "C:\\dev\\"
             }
         ]
     },
