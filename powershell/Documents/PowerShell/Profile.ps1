@@ -7,7 +7,6 @@ Set-PSReadLineOption -Colors @{
   Variable              = 'Yellow'
   Parameter             = 'Yellow'
   ContinuationPrompt    = 'Black'
-  Default               = 'Black'
   InlinePrediction      = 'DarkGray'
 }
 
