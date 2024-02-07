@@ -1,3 +1,5 @@
+# config for clang-format 17
+
 Language: Cpp
 
 AccessModifierOffset: -4
@@ -14,11 +16,11 @@ AlignConsecutiveMacros:
   Enabled: true
   AcrossEmptyLines: true
   AcrossComments: false
-# AlignConsecutiveShortCaseStatements: # Seems unsupported
-#   Enabled: true
-#   AcrossEmptyLines: true
-#   AcrossComments: true
-#   AlignCaseColons: false
+AlignConsecutiveShortCaseStatements:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
+  AlignCaseColons: false
 AlignEscapedNewlines: Right
 AlignOperands: Align
 AlignTrailingComments:
@@ -26,7 +28,7 @@ AlignTrailingComments:
   OverEmptyLines: 0
 AllowAllArgumentsOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
-# AllowBreakBeforeNoexceptSpecifier: Always # Seems unsupported
+# AllowBreakBeforeNoexceptSpecifier: Always # TODO: use it whenever clang-format 18
 AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortEnumsOnASingleLine: false
@@ -58,11 +60,11 @@ BraceWrapping:
   SplitEmptyFunction: true
   SplitEmptyRecord: false
   SplitEmptyNamespace: true
-BreakAfterAttributes: Leave # MAY CAUSE PROBLEMS!!!
+BreakAfterAttributes: Leave
 BreakBeforeBinaryOperators: None
 BreakBeforeBraces: Custom # Customized in `BraceWrapping`
 BreakBeforeConceptDeclarations: Always
-BreakBeforeInlineASMColon: OnlyMultiline # MAY CAUSE PROBLEMS!!!
+BreakBeforeInlineASMColon: OnlyMultiline
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: AfterComma
