@@ -26,9 +26,9 @@
     path = .gitconfig.work
 
 ### config for unix-like systems
-[includeIf "gitdif:/home"]
+[includeIf "gitdir:/home"]
     path = .gitconfig.unix
-[includeIf "gitdif:/Users"]
+[includeIf "gitdir:/Users"]
     path = .gitconfig.unix
-[includeIf "gitdif:/data/data/com.termux/home"]
+[includeIf "gitdir:/data/data/com.termux/home"]
     path = .gitconfig.unix
