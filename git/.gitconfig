@@ -22,13 +22,15 @@
 [alias]
     showtool = "!showci () { rev=$(git rev-parse \"${*:-HEAD}\"); git difftool $rev~1 $rev; }; showci"
 
-[includeIf "gitdir:C:/dev/glidewell/"]
+[includeIf "gitdir:C:/dev/glidewell/**"]
     path = .gitconfig.work
 
 ### config for unix-like systems
-[includeIf "gitdir:/home"]
+[includeIf "gitdir:/home/**"]
     path = .gitconfig.unix
-[includeIf "gitdir:/Users"]
+[includeIf "gitdir:/tmp/**"]
     path = .gitconfig.unix
-[includeIf "gitdir:/data/data/com.termux/home"]
+[includeIf "gitdir:/Users/**"]
+    path = .gitconfig.unix
+[includeIf "gitdir:/data/data/com.termux/home/**"]
     path = .gitconfig.unix
