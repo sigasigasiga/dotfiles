@@ -8,21 +8,27 @@
     name = Egor Bychin
     email = e.siga@proton.me
 
-[diff]
-    tool = nvimdiff
-
-[difftool]
-    prompt = false
-    trustExitCode = true
-
-[difftool "nvimdiff"]
-    cmd = "nvim -dM \"$LOCAL\" \"$REMOTE\""
-
-[alias]
-    showtool = "!showci () { rev=$(git rev-parse \"${*:-HEAD}\"); git difftool $rev~1 $rev; }; showci"
-
 [rerere]
     enabled = true
 
+### difftool config
+[diff]
+    tool = nvimdiff
+[difftool]
+    prompt = false
+    trustExitCode = true
+[difftool "nvimdiff"]
+    cmd = "nvim -dM \"$LOCAL\" \"$REMOTE\""
+[alias]
+    showtool = "!showci () { rev=$(git rev-parse \"${*:-HEAD}\"); git difftool $rev~1 $rev; }; showci"
+
 [includeIf "gitdir:C:/dev/glidewell/"]
     path = .gitconfig.work
+
+### config for unix-like systems
+[includeIf "gitdif:/home"]
+    path = .gitconfig.unix
+[includeIf "gitdif:/Users"]
+    path = .gitconfig.unix
+[includeIf "gitdif:/data/data/com.termux/home"]
+    path = .gitconfig.unix
