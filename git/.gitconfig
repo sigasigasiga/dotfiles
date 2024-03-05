@@ -32,5 +32,5 @@
     path = .gitconfig.unix
 [includeIf "gitdir:/Users/**"]
     path = .gitconfig.unix
-[includeIf "gitdir:/data/data/com.termux/home/**"]
+[includeIf "gitdir:/data/data/com.termux/files/home/**"]
     path = .gitconfig.unix
