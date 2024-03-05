@@ -1,15 +1,28 @@
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
 [user]
-    email = j@siga.icu
     name = Egor Bychin
+    email = e.siga@proton.me
 
 [diff]
     tool = nvimdiff
 
 [difftool]
-	prompt = false
+    prompt = false
     trustExitCode = true
 
 [difftool "nvimdiff"]
     cmd = "nvim -dM \"$LOCAL\" \"$REMOTE\""
+
 [alias]
-	showtool = "!showci () { rev=$(git rev-parse \"${*:-HEAD}\"); git difftool $rev~1 $rev; }; showci"
+    showtool = "!showci () { rev=$(git rev-parse \"${*:-HEAD}\"); git difftool $rev~1 $rev; }; showci"
+
+[rerere]
+    enabled = true
+
+[includeIf "gitdir:C:/dev/glidewell/"]
+    path = .gitconfig.work
