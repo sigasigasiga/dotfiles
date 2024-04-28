@@ -25,6 +25,7 @@ function fish_prompt --description 'Write out the prompt'
 
     # default prompt
     echo -n -s \
+        (set_color blue) (date +%H:%M:%S) ' '                                       (: HH:MM:SS)        \
         "$user_color$USER$normal_color@$host_color$hostname" $normal_color ' '      (: user@host)       \
         (set_color $pwd_color) $PWD $normal_color                                   (: /home/user/)     \
         (fish_vcs_prompt) $normal_color                                             (: git branch name) \
