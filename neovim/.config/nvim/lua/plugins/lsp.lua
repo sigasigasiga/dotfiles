@@ -62,8 +62,8 @@ end
 
 return function()
     vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-        callback = on_lsp_attach
+        group = vim.api.nvim_create_augroup('lsp_user_config', {}),
+        callback = function(ev) on_lsp_attach(ev) end -- i don't know why but it needs to be wrapped
     })
 
     lspconfig = require('lspconfig')
