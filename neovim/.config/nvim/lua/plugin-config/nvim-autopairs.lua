@@ -5,6 +5,10 @@ return function()
     local Rule = require('nvim-autopairs.rule')
     local cond = require('nvim-autopairs.conds')
 
+    npairs.add_rules{
+        Rule('```', '```')
+    }
+
     -- The following code is stolen from https://github.com/windwp/nvim-autopairs/wiki/Custom-rules#add-spaces-between-parentheses
     local brackets = { { '(', ')' }, { '[', ']' }, { '{', '}' } }
     npairs.add_rules{
