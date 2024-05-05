@@ -1,4 +1,4 @@
-# config for clang-format 17
+# config for clang-format 18
 
 Language: Cpp
 
@@ -28,9 +28,10 @@ AlignTrailingComments:
   OverEmptyLines: 0
 AllowAllArgumentsOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
-# AllowBreakBeforeNoexceptSpecifier: Always # TODO: use it whenever clang-format 18
+AllowBreakBeforeNoexceptSpecifier: Always
 AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
+AllowShortCompoundRequirementOnASingleLine: true
 AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: InlineOnly
 AllowShortIfStatementsOnASingleLine: Never
@@ -60,6 +61,7 @@ BraceWrapping:
   SplitEmptyFunction: true
   SplitEmptyRecord: false
   SplitEmptyNamespace: true
+BreakAdjacentStringLiterals: true
 BreakAfterAttributes: Leave
 BreakBeforeBinaryOperators: None
 BreakBeforeBraces: Custom # Customized in `BraceWrapping`
@@ -113,6 +115,7 @@ RequiresClausePosition: OwnLine
 RequiresExpressionIndentation: OuterScope
 SeparateDefinitionBlocks: Leave
 ShortNamespaceLines: 0
+SkipMacroDefinitionBody: false
 SortIncludes: Never
 SortUsingDeclarations: Lexicographic
 SpaceAfterCStyleCast: false
@@ -130,6 +133,7 @@ SpaceBeforeSquareBrackets: false
 SpaceInEmptyBlock: false
 SpacesBeforeTrailingComments: 1
 SpacesInAngles: Never
+SpacesInParens: Never
 SpacesInSquareBrackets: false
 Standard: Auto
 UseTab: Never
