@@ -1,5 +1,5 @@
 vim.cmd([[packadd termdebug]])
-require('plugins.dark_monitor')
+require('plugin-config.dark_monitor')
 
 return require('packer').startup(function(use)
     use {
@@ -8,7 +8,7 @@ return require('packer').startup(function(use)
 
     use {
         'neovim/nvim-lspconfig',
-        config = require('plugins.lsp')
+        config = require('plugin-config.lsp')
     }
 
     use {
@@ -34,9 +34,7 @@ return require('packer').startup(function(use)
 
     use {
         'windwp/nvim-autopairs',
-        config = function()
-            require('nvim-autopairs').setup()
-        end
+        config = require('plugin-config.nvim-autopairs')
     }
 
     use {
@@ -68,6 +66,6 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-tree/nvim-tree.lua',
-        config = require('plugins.nvim-tree')
+        config = require('plugin-config.nvim-tree')
     }
 end)
