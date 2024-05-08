@@ -70,7 +70,7 @@ return require('packer').startup(function(use)
         config = function()
             local bufopts = { noremap=true, silent=true }
             local telescope = require('telescope.builtin')
-            vim.keymap.set('n', '\\fg', telescope.git_files, bufopts)
+            vim.keymap.set('n', '<Leader>fg', telescope.git_files, bufopts)
         end
     }
 
