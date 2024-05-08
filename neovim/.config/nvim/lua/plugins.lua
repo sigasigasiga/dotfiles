@@ -12,6 +12,11 @@ return require('packer').startup(function(use)
     }
 
     use {
+        'mfussenegger/nvim-dap',
+        config = require('plugin-config.nvim-dap')
+    }
+
+    use {
         'ellisonleao/gruvbox.nvim',
         config = function()
             local gray = '#504945'
