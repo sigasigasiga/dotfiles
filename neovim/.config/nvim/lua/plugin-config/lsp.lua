@@ -20,6 +20,9 @@ return function()
         vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, bufopts)
         vim.keymap.set('n', 'gl', vim.lsp.buf.references, bufopts)
 
+        -- 'l' stands for 'lsp'
+        vim.keymap.set({'n', 'v'}, '<Leader>lh', vim.lsp.buf.hover, bufopts)
+
         vim.api.nvim_create_user_command('DiagList', ignore_args_wrapper(vim.diagnostic.setloclist), {})
         vim.api.nvim_create_user_command('DiagEnable', ignore_args_wrapper(vim.diagnostic.enable), {})
         vim.api.nvim_create_user_command('DiagDisable', ignore_args_wrapper(vim.diagnostic.disable), {})
