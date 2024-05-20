@@ -43,13 +43,6 @@ return require('packer').startup(function(use)
     }
 
     use {
-        'aserowy/tmux.nvim',
-        config = function()
-            require('tmux').setup()
-        end
-    }
-
-    use {
         'kylechui/nvim-surround',
         config = function()
             require('nvim-surround').setup()
