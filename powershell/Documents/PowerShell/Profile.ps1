@@ -1,5 +1,5 @@
 Set-PSReadLineOption -Colors @{
-  Command               = 'DarkGreen'
+  Command               = 'DarkCyan'
   Number                = 'Magenta'
   Member                = 'Blue'
   Operator              = 'Black'
@@ -8,6 +8,7 @@ Set-PSReadLineOption -Colors @{
   Parameter             = 'Yellow'
   ContinuationPrompt    = 'Black'
   InlinePrediction      = 'DarkGray'
+  Default               = 'DarkGreen'
 }
 
 Set-PSReadLineOption -PredictionSource History
