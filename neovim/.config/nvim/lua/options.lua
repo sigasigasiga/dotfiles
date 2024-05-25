@@ -26,7 +26,8 @@ end
 -- FIXME: i dont know why but these settings cannot be set reliably via lua
 vim.cmd[[set iminsert=0 imsearch=0]]
 
-vim.cmd.language('en_US')
+-- for some reason 'en_US' is not present on all systems, don't error out on that
+pcall(vim.cmd.language, 'en_US')
 
 -- angle brackets matching behaviour
 vim.opt.matchpairs:append('<:>')
