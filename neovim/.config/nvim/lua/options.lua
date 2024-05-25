@@ -26,7 +26,7 @@ end
 -- FIXME: i dont know why but these settings cannot be set reliably via lua
 vim.cmd[[set iminsert=0 imsearch=0]]
 
--- for some reason 'en_US' is not present on all systems, don't error out on that
+-- for some reason 'en_US' is not present on all systems (e.g. on raspberry pi), don't error out on that
 pcall(vim.cmd.language, 'en_US')
 
 -- angle brackets matching behaviour
