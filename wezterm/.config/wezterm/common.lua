@@ -23,6 +23,7 @@ M.fill_config = function(config)
     local hide_tab_bar = type(config.launch_menu) == 'table' and next(config.launch_menu) == nil
 
     config.color_scheme = scheme_for_appearance(get_appearance())
+    config.use_fancy_tab_bar = false
     config.font = wezterm.font('Source Code Pro')
     config.hide_tab_bar_if_only_one_tab = hide_tab_bar
 end
