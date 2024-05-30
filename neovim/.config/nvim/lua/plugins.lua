@@ -71,9 +71,4 @@ return require('packer').startup(function(use)
             vim.keymap.set('n', '<Leader>fg', telescope.git_files, bufopts)
         end
     }
-
-    use {
-        'nvim-tree/nvim-tree.lua',
-        config = require('plugin-config.nvim-tree')
-    }
 end)
