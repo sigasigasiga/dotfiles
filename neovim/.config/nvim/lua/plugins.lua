@@ -54,8 +54,12 @@ return require('packer').startup(function(use)
         opt = true,
         cmd = {
             "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gsplit", "Gread",
-            "Gwrite", "Ggrep", "Glgrep", "Gmove", "Gdelete", "Gremove", "Gbrowse",
+            "Gwrite", "Ggrep", "Glgrep", "Gmove", "Gdelete", "Gremove", "GBrowse",
         }
+    }
+
+    use {
+        'tommcdo/vim-fubitive'
     }
 
     use {
