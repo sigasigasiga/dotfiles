@@ -37,3 +37,8 @@ vim.opt.path:append('**')
 
 -- clear search results
 vim.api.nvim_create_user_command('CS', 'let @/ = ""', {})
+
+-- netrw config
+vim.g.netrw_winsize = 15 -- do not take half of the screen
+vim.g.netrw_banner = 0 -- hide help banner on the top
+vim.g.netrw_list_hide = [[^\./$]] -- hide `.` from directory list
