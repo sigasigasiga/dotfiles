@@ -11,6 +11,9 @@
 [rerere]
     enabled = true
 
+[grep]
+    linenumber = true
+
 ### difftool config
 [diff]
     tool = nvimdiff
@@ -22,10 +25,11 @@
 [alias]
     showtool = "!showci () { rev=$(git rev-parse \"${*:-HEAD}\"); git difftool $rev~1 $rev; }; showci"
 
+### project specific configs
 [includeIf "gitdir:C:/dev/glidewell/**"]
     path = .gitconfig.work
 
-### config for unix-like systems
+### platform specific configs
 [includeIf "gitdir:/home/**"]
     path = .gitconfig.unix
 [includeIf "gitdir:/tmp/**"]
