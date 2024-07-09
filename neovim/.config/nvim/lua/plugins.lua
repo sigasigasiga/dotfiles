@@ -17,15 +17,20 @@ return require('packer').startup(function(use)
     }
 
     use {
+        'stevearc/overseer.nvim',
+        config = function() require('overseer').setup() end
+    }
+
+    use {
         'ellisonleao/gruvbox.nvim',
         config = function()
             local gray = '#504945'
 
-            require('gruvbox').setup{
+            require('gruvbox').setup {
                 overrides = {
-                    LspReferenceRead = {bg = gray},
-                    LspReferenceText = {bg = gray},
-                    LspReferenceWrite = {bg = gray},
+                    LspReferenceRead = { bg = gray },
+                    LspReferenceText = { bg = gray },
+                    LspReferenceWrite = { bg = gray },
                 }
             }
 
@@ -68,9 +73,9 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.6',
-        requires = { {'nvim-lua/plenary.nvim'} },
+        requires = { { 'nvim-lua/plenary.nvim' } },
         config = function()
-            local bufopts = { noremap=true, silent=true }
+            local bufopts = { noremap = true, silent = true }
             local telescope = require('telescope.builtin')
             vim.keymap.set('n', '<Leader>fg', telescope.git_files, bufopts)
         end
