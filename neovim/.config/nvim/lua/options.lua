@@ -1,6 +1,8 @@
 local options = {
     -- numbers on the left
     number = true,
+    -- show N lines above/below the cursor
+    scrolloff = 10,
     -- autocompletions in command mode
     wildmenu = true,
     wildmode = { 'list', 'longest', 'full' },
