@@ -19,6 +19,10 @@
             "keys": "ctrl+c"
         },
         {
+            "command": "unbound",
+            "keys": "f11"
+        },
+        {
             "command": "paste"
         },
         {
@@ -33,6 +37,10 @@
         {
             "command": "find",
             "keys": "ctrl+shift+f"
+        },
+        {
+            "command": "toggleFullscreen",
+            "keys": "alt+f11"
         }
     ],
     "copyFormatting": "none",
