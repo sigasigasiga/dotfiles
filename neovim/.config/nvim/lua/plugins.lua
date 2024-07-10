@@ -12,7 +12,7 @@ return require('packer').startup(function(use)
     }
 
     use {
-        'mfussenegger/nvim-dap',
+        'sigasigasiga/nvim-dap',
         config = require('plugin-config.nvim-dap')
     }
 
