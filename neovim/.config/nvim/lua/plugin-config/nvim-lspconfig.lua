@@ -22,12 +22,11 @@ return function()
         vim.keymap.set('n', 'gl', vim.lsp.buf.references, bufopts)
 
         -- 'c' stands for 'code'
-        vim.keymap.set({ 'n', 'v' }, '<Leader>ch', vim.lsp.buf.hover, bufopts)
         vim.keymap.set('n', '<Leader>cr', vim.lsp.buf.rename, bufopts)
 
         vim.api.nvim_create_user_command('DiagList', ignore_args_wrapper(vim.diagnostic.setloclist), {})
-        vim.api.nvim_create_user_command('DiagEnable', ignore_args_wrapper(vim.diagnostic.enable), {})
-        vim.api.nvim_create_user_command('DiagDisable', ignore_args_wrapper(vim.diagnostic.disable), {})
+        vim.api.nvim_create_user_command('DiagEnable', function() vim.diagnostic.enable(true) end, {})
+        vim.api.nvim_create_user_command('DiagDisable', function() vim.diagnostic.enable(false) end, {})
 
         if client.server_capabilities.documentHighlightProvider then
             -- number of milliseconds needed for highlight to appear
@@ -73,7 +72,7 @@ return function()
         callback = on_lsp_attach
     })
 
-    lspconfig = require('lspconfig')
+    local lspconfig = require('lspconfig')
 
     lspconfig.clangd.setup {
         cmd = { 'clangd', '--fallback-style=none' },

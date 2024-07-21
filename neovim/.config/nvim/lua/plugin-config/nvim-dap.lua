@@ -12,7 +12,7 @@ return function()
     vim.keymap.set('n', '<Leader>db', dap.toggle_breakpoint)
     vim.keymap.set('n', '<Leader>dr', dap.repl.open)
     vim.keymap.set({'n', 'v'}, '<Leader>dh', widgets.hover)
-    vim.keymap.set('n', '<Leader>df', sidebar(widgets.frames).toggle)
+    vim.keymap.set('n', '<Leader>ds', sidebar(widgets.frames).toggle) -- 's' => 'stack'
     vim.keymap.set('n', '<Leader>dv', sidebar(widgets.scopes).toggle) -- 'v' => 'variables'
 
     dap.adapters.lldb = {
@@ -26,7 +26,7 @@ return function()
     -- https://github.com/mfussenegger/nvim-dap/discussions/869#discussioncomment-8121995
     dap.adapters.cppvsdbg = {
         id = 'cppvsdbg',
-        type ='executable',
+        type = 'executable',
         command = 'C:\\Users\\egorbychin\\.vscode\\extensions\\ms-vscode.cpptools-1.20.5-win32-x64\\debugAdapters\\vsdbg\\bin\\vsdbg.exe',
         args = { '--interpreter=vscode' },
         reverse_request_handlers = {
