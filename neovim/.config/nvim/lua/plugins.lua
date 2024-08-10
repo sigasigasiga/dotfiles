@@ -39,7 +39,7 @@ return require('packer').startup(function(use)
     }
 
     use {
-        'EdenEast/nightfox.nvim'
+        'rakr/vim-one'
     }
 
     use {

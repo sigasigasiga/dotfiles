@@ -29,7 +29,7 @@ end
 assert(#dark_monitor_exe == 1)
 assert(type(rpc_socket) == 'string')
 -- It is better to use `vim.system` on neovim version 0.10+
-local job_id = vim.fn.jobstart({dark_monitor_exe[1], '--nvim-sock', rpc_socket}, {
+local job_id = vim.fn.jobstart({ dark_monitor_exe[1], '--nvim-sock', rpc_socket }, {
     detach = true,
     stdin = nil
 })
@@ -38,10 +38,10 @@ assert(job_id > 0, 'Unable to start the `neovim-dark-monitor` job')
 local set_theme = function(theme)
     if theme == 'dark' then
         vim.o.background = 'dark'
-        vim.cmd('colorscheme gruvbox')
+        vim.cmd.colorscheme('gruvbox')
     elseif theme == 'light' then
         vim.o.background = 'light'
-        vim.cmd('colorscheme dawnfox')
+        vim.cmd.colorscheme('one')
     else
         vim.print(string.format('neovim-dark-monitor: Theme is unknown (%s)', tostring(theme)))
     end
