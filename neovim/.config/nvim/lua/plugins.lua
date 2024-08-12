@@ -33,13 +33,11 @@ return require('packer').startup(function(use)
                     LspReferenceWrite = { bg = gray },
                 }
             }
-
-            vim.o.background = 'dark'
         end
     }
 
     use {
-        'rakr/vim-one'
+        'catppuccin/nvim'
     }
 
     use {

@@ -41,7 +41,7 @@ local set_theme = function(theme)
         vim.cmd.colorscheme('gruvbox')
     elseif theme == 'light' then
         vim.o.background = 'light'
-        vim.cmd.colorscheme('one')
+        vim.cmd.colorscheme('catppuccin')
     else
         vim.print(string.format('neovim-dark-monitor: Theme is unknown (%s)', tostring(theme)))
     end

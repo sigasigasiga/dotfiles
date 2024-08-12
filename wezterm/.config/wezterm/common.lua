@@ -15,7 +15,7 @@ local scheme_for_appearance = function(appearance)
     if appearance:find('Dark') then
         return 'GruvboxDark'
     else
-        return 'One Light (Gogh)'
+        return 'Catppuccin Latte'
     end
 end
 
