@@ -60,7 +60,7 @@
             "colorScheme": 
             {
                 "dark": "Gruvbox Dark [Soft]",
-                "light": "dawnfox"
+                "light": "Catppuccin Latte"
             },
             "cursorShape": "filledBox",
             "experimental.retroTerminalEffect": false,
@@ -440,52 +440,49 @@
             "yellow": "#808000"
         },
         {
-            "background": "#FAF4ED",
-            "black": "#575279",
-            "blue": "#286983",
-            "brightBlack": "#5F5695",
-            "brightBlue": "#2D81A3",
-            "brightCyan": "#5CA7B4",
-            "brightGreen": "#629F81",
-            "brightPurple": "#9A80B9",
-            "brightRed": "#C26D85",
-            "brightWhite": "#E6EBF3",
-            "brightYellow": "#EEA846",
-            "cursorColor": "#575279",
-            "cyan": "#56949F",
-            "foreground": "#575279",
-            "green": "#618774",
-            "name": "dawnfox",
-            "purple": "#907AA9",
-            "red": "#B4637A",
-            "selectionBackground": "#D0D8D8",
-            "white": "#E5E9F0",
-            "yellow": "#EA9D34"
-        },
-        {
-            "background": "#F6F2EE",
-            "black": "#352C24",
-            "blue": "#2848A9",
-            "brightBlack": "#534C45",
-            "brightBlue": "#4863B6",
-            "brightCyan": "#488D93",
-            "brightGreen": "#577F63",
-            "brightPurple": "#8452D5",
-            "brightRed": "#B3434E",
-            "brightWhite": "#F4ECE6",
-            "brightYellow": "#B86E28",
-            "cursorColor": "#3D2B5A",
-            "cyan": "#287980",
-            "foreground": "#3D2B5A",
-            "green": "#396847",
-            "name": "dayfox",
-            "purple": "#6E33CE",
-            "red": "#A5222F",
-            "selectionBackground": "#E7D2BE",
-            "white": "#F2E9E1",
-            "yellow": "#AC5402"
+            "name": "Catppuccin Latte",
+
+            "cursorColor": "#DC8A78",
+            "selectionBackground": "#ACB0BE",
+
+            "background": "#EFF1F5",
+            "foreground": "#4C4F69",
+
+            "black": "#5C5F77",
+            "red": "#D20F39",
+            "green": "#40A02B",
+            "yellow": "#DF8E1D",
+            "blue": "#1E66F5",
+            "purple": "#EA76CB",
+            "cyan": "#179299",
+            "white": "#ACB0BE",
+
+            "brightBlack": "#ACB0BE",
+            "brightRed": "#D20F39",
+            "brightGreen": "#40A02B",
+            "brightYellow": "#DF8E1D",
+            "brightBlue": "#1E66F5",
+            "brightPurple": "#EA76CB",
+            "brightCyan": "#179299",
+            "brightWhite": "#BCC0CC"
         }
     ],
     "theme": "system",
-    "themes": []
+    "themes": [
+        {
+            "name": "Catppuccin Latte",
+            "tab": {
+                "background": "#EFF1F5FF",
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "tabRow": {
+                "background": "#E6E9EFFF",
+                "unfocusedBackground": "#DCE0E8FF"
+            },
+            "window": {
+                "applicationTheme": "light"
+            }
+        }
+    ]
 }
