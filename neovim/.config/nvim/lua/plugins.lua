@@ -78,4 +78,8 @@ return require('packer').startup(function(use)
             vim.keymap.set('n', '<Leader>fg', telescope.git_files, bufopts)
         end
     }
+
+    use {
+        'kevinhwang91/nvim-bqf'
+    }
 end)
