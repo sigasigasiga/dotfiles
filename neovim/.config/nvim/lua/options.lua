@@ -48,6 +48,6 @@ vim.opt.path:append('**')
 vim.api.nvim_create_user_command('CS', 'let @/ = ""', {})
 
 -- netrw config
-vim.g.netrw_banner = 0               -- hide help banner on the top (can be shown with `I`)
-vim.g.netrw_list_hide = [[^\./$]]    -- hide `.` from directory list
-vim.g.netrw_sort_sequence = '[\\/]$' -- dirs are shown on the top
+vim.g.netrw_banner = 0                   -- hide help banner on the top (can be shown with `I`)
+vim.g.netrw_list_hide = [[^\./$,^\../$]] -- hide `.` from directory list
+vim.g.netrw_sort_sequence = '[\\/]$'     -- dirs are shown on the top
