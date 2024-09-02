@@ -23,6 +23,10 @@
             "keys": "f11"
         },
         {
+            "command": "unbound",
+            "keys": "ctrl+shift+w"
+        },
+        {
             "command": "paste"
         },
         {
@@ -41,6 +45,10 @@
         {
             "command": "toggleFullscreen",
             "keys": "alt+f11"
+        },
+        {
+            "command": "closePane",
+            "keys": "ctrl+alt+shift+f4"
         }
     ],
     "copyFormatting": "none",
