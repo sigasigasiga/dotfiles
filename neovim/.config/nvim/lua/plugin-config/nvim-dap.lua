@@ -11,7 +11,7 @@ return function()
     -- 'd' stands for 'debug'
     vim.keymap.set('n', '<Leader>db', dap.toggle_breakpoint)
     vim.keymap.set('n', '<Leader>dr', dap.repl.open)
-    vim.keymap.set({'n', 'v'}, '<Leader>dh', widgets.hover)
+    vim.keymap.set({ 'n', 'v' }, '<Leader>dh', widgets.hover)
     vim.keymap.set('n', '<Leader>ds', sidebar(widgets.frames).toggle) -- 's' => 'stack'
     vim.keymap.set('n', '<Leader>dv', sidebar(widgets.scopes).toggle) -- 'v' => 'variables'
 
@@ -91,4 +91,6 @@ return function()
             pathFormat = 'path'
         },
     }
+
+    dap.configurations.c = dap.configurations.cpp
 end
