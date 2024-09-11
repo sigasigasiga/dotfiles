@@ -47,6 +47,9 @@ vim.opt.path:append('**')
 -- clear search results
 vim.api.nvim_create_user_command('CS', 'let @/ = ""', {})
 
+-- external tools
+vim.api.nvim_create_user_command('JqReformatCurBuf', '%!jq .', {})
+
 -- netrw config
 vim.g.netrw_banner = 0                   -- hide help banner on the top (can be shown with `I`)
 vim.g.netrw_list_hide = [[^\./$,^\../$]] -- hide `.` from directory list
