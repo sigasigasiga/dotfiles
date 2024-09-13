@@ -23,6 +23,8 @@ return function()
 
         -- 'c' stands for 'code'
         vim.keymap.set('n', '<Leader>cr', vim.lsp.buf.rename, bufopts)
+        vim.keymap.set('n', '<Leader>cs', vim.lsp.buf.signature_help, bufopts)
+        vim.keymap.set('i', '<C-x><C-s>', vim.lsp.buf.signature_help, bufopts)
 
         vim.api.nvim_create_user_command('DiagList', ignore_args_wrapper(vim.diagnostic.setloclist), {})
         vim.api.nvim_create_user_command('DiagEnable', function() vim.diagnostic.enable(true) end, {})
