@@ -12,18 +12,17 @@ return function()
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         assert(client)
 
-        -- Enable completion triggered by <c-x><c-o>
+        -- Enable completion triggered by <C-x><C-o>
         vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
+        -- 'c' stands for 'code'
         local bufopts = { noremap = true, silent = true }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-        vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, bufopts)
-        vim.keymap.set('n', 'gl', vim.lsp.buf.references, bufopts)
-        vim.keymap.set({'n', 'i'}, '<C-s>', vim.lsp.buf.signature_help, bufopts)
-
-        -- 'c' stands for 'code'
+        vim.keymap.set('n', '<Leader>ci', vim.lsp.buf.implementation, bufopts) -- 'i' -> implementation
+        vim.keymap.set('n', '<Leader>cl', vim.lsp.buf.references, bufopts) -- 'l' -> list
         vim.keymap.set('n', '<Leader>cr', vim.lsp.buf.rename, bufopts)
+        vim.keymap.set({'n', 'i'}, '<C-s>', vim.lsp.buf.signature_help, bufopts) -- 's' -> signature
 
         vim.api.nvim_create_user_command('DiagList', ignore_args_wrapper(vim.diagnostic.setloclist), {})
         vim.api.nvim_create_user_command('DiagEnable', function() vim.diagnostic.enable(true) end, {})
@@ -78,7 +77,7 @@ return function()
     lspconfig.clangd.setup {
         cmd = { 'clangd', '--fallback-style=none' },
         on_attach = function(client, bufnr)
-            vim.keymap.set('n', 'gc', ':ClangdSwitchSourceHeader<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>cs', ':ClangdSwitchSourceHeader<CR>', bufopts) -- 's' -> switch
         end
     }
 
