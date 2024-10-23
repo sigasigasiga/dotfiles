@@ -1,0 +1,10 @@
+[Unit]
+Description=SSH key agent
+After=systemd-user-sessions.service user-runtime-dir@%U.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/ssh-agent -D -a %t/ssh-agent.sock
+
+[Install]
+WantedBy=default.target
