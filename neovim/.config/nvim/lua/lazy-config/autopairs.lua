@@ -1,4 +1,4 @@
-return function()
+local autopairs_cfg = function()
     local npairs = require('nvim-autopairs')
     npairs.setup()
 
@@ -52,3 +52,18 @@ return function()
         }
     end
 end
+
+return {
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = autopairs_cfg
+    },
+
+    {
+        "kylechui/nvim-surround",
+        version = "*",
+        event = "VeryLazy",
+        opts = {},
+    },
+}

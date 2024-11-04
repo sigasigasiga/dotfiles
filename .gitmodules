@@ -1,6 +1,6 @@
 [submodule "vim/.vim/bundle/Vundle.vim"]
 	path = vim/.vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim
-[submodule "neovim/.local/share/nvim/site/pack/packer/start/packer.nvim"]
-	path = neovim/.local/share/nvim/site/pack/packer/start/packer.nvim
-	url = https://github.com/wbthomason/packer.nvim
+[submodule "neovim/.local/share/nvim/lazy/lazy.nvim"]
+	path = neovim/.local/share/nvim/lazy/lazy.nvim
+	url = https://github.com/folke/lazy.nvim.git

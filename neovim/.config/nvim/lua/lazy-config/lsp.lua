@@ -1,6 +1,4 @@
-return function()
-    -- unfortunately, `packer.nvim` doesn't support upvalues in config functions
-    -- TODO: try `lazy.nvim`
+local cfg = function()
     local ignore_args_wrapper = function(f)
         return function()
             f()
@@ -122,3 +120,8 @@ return function()
         }
     }
 end
+
+return {
+    'neovim/nvim-lspconfig',
+    config = cfg
+}
