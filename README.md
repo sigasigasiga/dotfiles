@@ -8,5 +8,8 @@ stow <folder name>
 
 windows:
 ```
-new-item -itemtype symboliclink -path C:\FULL\PATH\TO\THE\TARGET -value C:\FULL\PATH\TO\THE\FILE\FROM\DOTFILES
+new-item `
+    -itemtype symboliclink `
+    -path C:\FULL\PATH\TO\THE\TARGET\TARGET_NAME.EXT `
+    -value C:\FULL\PATH\TO\THE\FILE\FROM\DOTFILES\TARGET_NAME.EXT
 ```
