@@ -11,6 +11,9 @@ return {
     {
         'tommcdo/vim-fubitive',
         lazy = true,
-        cmd = 'GBrowse'
+        cmd = 'GBrowse',
+        dependencies = {
+            'tpope/vim-fugitive',
+        },
     },
 }
