@@ -1,19 +1,5 @@
-local cfg = function()
-    local dap = require('dap')
-    local widgets = require('dap.ui.widgets')
-    local sidebar = widgets.sidebar
-
-    vim.keymap.set('n', '<F5>', dap.continue)
-    vim.keymap.set('n', '<F10>', dap.step_over)
-    vim.keymap.set('n', '<F11>', dap.step_into)
-    vim.keymap.set('n', '<F12>', dap.step_out)
-
-    -- 'd' stands for 'debug'
-    vim.keymap.set('n', '<Leader>db', dap.toggle_breakpoint)
-    vim.keymap.set('n', '<Leader>dr', dap.repl.open)
-    vim.keymap.set({ 'n', 'v' }, '<Leader>dh', widgets.hover)
-    vim.keymap.set('n', '<Leader>ds', sidebar(widgets.frames).toggle) -- 's' => 'stack'
-    vim.keymap.set('n', '<Leader>dv', sidebar(widgets.scopes).toggle) -- 'v' => 'variables'
+local setup_adapters = function()
+    local dap = require'dap'
 
     dap.adapters['lldb'] = {
         name = 'lldb',
@@ -41,14 +27,33 @@ local cfg = function()
     dap.configurations.c = dap.configurations.cpp
 end
 
-return {
-    {
-        'mfussenegger/nvim-dap',
-        config = cfg,
-    },
+local dap_sidebar_toggle = function(name)
+    local widgets = require'dap.ui.widgets'
+    widgets.sidebar(widgets[name]).toggle()
+end
 
-    {
-        'stevearc/overseer.nvim',
-        opts = {},
+return {
+    'mfussenegger/nvim-dap',
+    config = setup_adapters,
+    cmd = 'DapContinue',
+    keys = {
+        { '<F5>', function() require'dap'.continue() end },
+        { '<F10>', function() require'dap'.step_over() end },
+        { '<F11>', function() require'dap'.step_into() end },
+        { '<F12>', function() require'dap'.step_out() end },
+
+        -- 'd' -> 'debug'
+        { '<Leader>db', function() require'dap'.toggle_breakpoint() end },
+
+        { '<Leader>dh', function() require'dap.ui.widgets'.hover() end, mode = { 'n', 'v' } },
+        { '<Leader>ds', function() dap_sidebar_toggle('frames') end }, -- 's' -> 'stack'
+        { '<Leader>dv', function() dap_sidebar_toggle('scopes') end }, -- 'v' -> 'variables'
+
+    },
+    dependencies = {
+        {
+            'stevearc/overseer.nvim',
+            opts = {},
+        },
     },
 }
