@@ -50,6 +50,11 @@ vim.api.nvim_create_user_command('CS', 'let @/ = ""', {})
 -- external tools
 vim.api.nvim_create_user_command('JqReformatCurBuf', '%!jq .', {})
 
+-- diagnostics
+vim.api.nvim_create_user_command('DiagList', function() vim.diagnostic.setloclist() end, {})
+vim.api.nvim_create_user_command('DiagEnable', function() vim.diagnostic.enable(true) end, {})
+vim.api.nvim_create_user_command('DiagDisable', function() vim.diagnostic.enable(false) end, {})
+
 -- netrw config
 vim.g.netrw_banner = 0                   -- hide help banner on the top (can be shown with `I`)
 vim.g.netrw_list_hide = [[^\./$,^\../$]] -- hide `.` from directory list

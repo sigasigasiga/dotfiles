@@ -1,10 +1,4 @@
 local cfg = function()
-    local ignore_args_wrapper = function(f)
-        return function()
-            f()
-        end
-    end
-
     local on_lsp_attach = function(event)
         local bufnr = event.buf
         local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -21,10 +15,6 @@ local cfg = function()
         vim.keymap.set('n', '<Leader>cl', vim.lsp.buf.references, bufopts) -- 'l' -> list
         vim.keymap.set('n', '<Leader>cr', vim.lsp.buf.rename, bufopts)
         vim.keymap.set({'n', 'i'}, '<C-s>', vim.lsp.buf.signature_help, bufopts) -- 's' -> signature
-
-        vim.api.nvim_create_user_command('DiagList', ignore_args_wrapper(vim.diagnostic.setloclist), {})
-        vim.api.nvim_create_user_command('DiagEnable', function() vim.diagnostic.enable(true) end, {})
-        vim.api.nvim_create_user_command('DiagDisable', function() vim.diagnostic.enable(false) end, {})
 
         if client.server_capabilities.documentHighlightProvider then
             -- number of milliseconds needed for highlight to appear
@@ -57,7 +47,7 @@ local cfg = function()
             vim.api.nvim_clear_autocmds { buffer = bufnr, group = 'lsp_format' }
             vim.api.nvim_create_autocmd('BufWritePre', {
                 -- I don't know why is it needed to wrap the callback but it is what it is
-                callback = ignore_args_wrapper(vim.lsp.buf.format),
+                callback = function() vim.lsp.buf.format() end,
                 buffer = bufnr,
                 group = lsp_format_group,
                 desc = 'Format document on write'
@@ -123,5 +113,6 @@ end
 
 return {
     'neovim/nvim-lspconfig',
+    ft = { 'c', 'cpp', 'python', 'rust', 'lua', },
     config = cfg
 }
