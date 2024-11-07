@@ -4,7 +4,7 @@ local setup_adapters = function()
     dap.adapters['lldb'] = {
         name = 'lldb',
         type = 'executable',
-        command = '/opt/homebrew/opt/llvm/bin/lldb-dap',
+        command = vim.fn.exepath('lldb-dap'),
     }
 
     dap.adapters['lldb-dap'] = dap.adapters['lldb']
