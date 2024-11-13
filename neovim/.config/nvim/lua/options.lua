@@ -25,7 +25,10 @@ local options = {
     -- enable syntax
     syntax = 'on',
     -- show trailing whitespaces and tab characters
-    list = true
+    list = true,
+    -- it behaves exactly like the default statusline,
+    -- except the visual character number (`%V`) is removed
+    statusline = '%<%f %h%m%r%=%-14.(%l,%c%) %P',
 }
 
 for k, v in pairs(options) do
