@@ -1,17 +1,23 @@
-local gruvbox_gray = '#504945'
+local make_gruvbox_opts = function()
+    local gruvbox_gray = '#504945'
+
+    return {
+        overrides = {
+            LspReferenceRead = { bg = gruvbox_gray },
+            LspReferenceText = { bg = gruvbox_gray },
+            LspReferenceWrite = { bg = gruvbox_gray },
+        }
+    }
+end
 
 return {
     {
         'ellisonleao/gruvbox.nvim',
-        lazy = false,
-        opts = {
-            overrides = {
-                LspReferenceRead = { bg = gruvbox_gray },
-                LspReferenceText = { bg = gruvbox_gray },
-                LspReferenceWrite = { bg = gruvbox_gray },
-            }
-        }
+        opts = make_gruvbox_opts()
     },
 
-    'catppuccin/nvim',
+    {
+        'catppuccin/nvim',
+        name = 'catppuccin'
+    }
 }
