@@ -30,6 +30,7 @@ def main():
     current_dir = pathlib.Path('.')
     config_dir = current_dir / program_name
 
+    # TODO: check if these are absolute paths
     xdg_config_home = os.getenv('XDG_CONFIG_HOME') or default_config_home()
     xdg_data_home = os.getenv('XDG_DATA_HOME') or default_data_home()
 
