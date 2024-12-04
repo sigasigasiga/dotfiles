@@ -112,7 +112,7 @@ def main():
         logger.info('creating directories %s', path.parent)
         logger.info('symlinking %s to %s', config_dir / ent, path)
         os.makedirs(path.parent, mode = 0o700, exist_ok = True)
-        os.symlink(config_dir / ent, path)
+        os.symlink(config_dir / ent, path) # TODO: don't `raise` when symlink is already there
 
 if __name__ == '__main__':
     try:
