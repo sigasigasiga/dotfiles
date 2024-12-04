@@ -104,7 +104,7 @@ def main():
     target_map = TargetMap(description_path)
 
     for ent in os.listdir(config_dir):
-        if ent == DESCRIPTION_FILENAME:
+        if ent == DESCRIPTION_FILENAME or ent == '.gitignore':
             continue
 
         path = target_map.get_target_path(ent)
