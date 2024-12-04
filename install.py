@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import dataclasses
 import json
 import logging
 import os
@@ -109,10 +108,14 @@ def main():
             continue
 
         path = target_map.get_target_path(ent)
-        logger.info('creating directories %s', path.parent)
-        logger.info('symlinking %s to %s', config_dir / ent, path)
-        os.makedirs(path.parent, mode = 0o700, exist_ok = True)
-        os.symlink(config_dir / ent, path) # TODO: don't `raise` when symlink is already there
+        logger.info('Creating directories `%s`', path.parent)
+        logger.info('Symlinking `%s` to `%s`', config_dir / ent, path)
+
+        try:
+            os.makedirs(path.parent, mode = 0o700, exist_ok = True)
+            os.symlink(config_dir / ent, path)
+        except Exception as  e:
+            logger.warning('Cannot install `%s`: %s', ent, str(e))
 
 if __name__ == '__main__':
     try:
