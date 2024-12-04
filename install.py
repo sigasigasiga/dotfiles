@@ -13,16 +13,12 @@ DESCRIPTION_FILENAME = 'description.json'
 logger = logging.getLogger(__name__)
 
 class XdgVariablesStorage:
-    """
-    make an absolute path according
-    """
     config_home = None
     data_home = None
 
     @staticmethod
     def __get_xdg_env(var: str):
         ret = os.getenv(var)
-        ret = ret and os.path.expanduser(ret) # NOTE: it may not be strictly according to the standard
 
         if ret is None:
             logger.warning('`%s` is not set', var)
@@ -119,6 +115,5 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except BaseException as e:
-        logger.error('Error: %s', e)
-
+    except Exception:
+        logging.exception('Got an exception. Aborting...')
