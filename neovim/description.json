@@ -3,10 +3,10 @@
         "path": "$XDG_CONFIG_HOME/",
         "as": "nvim"
     },
-    "lazy.nvim": {
+    "lazy": {
         "path": {
-            "posix": "$XDG_DATA_HOME/nvim/lazy",
-            "nt": "$XDG_DATA_HOME/nvim-data/lazy"
+            "posix": "$XDG_DATA_HOME/nvim",
+            "nt": "$XDG_DATA_HOME/nvim-data"
         }
     }
 }

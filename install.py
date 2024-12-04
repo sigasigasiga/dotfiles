@@ -110,8 +110,8 @@ def main():
         path = target_map.get_target_path(ent)
         logger.info('creating directories %s', path.parent)
         logger.info('symlinking %s to %s', config_dir / ent, path)
-        #os.makedirs(path.parent, mode = 0o700, exist_ok = True)
-        #os.symlink(config_dir / ent, path)
+        os.makedirs(path.parent, mode = 0o700, exist_ok = True)
+        os.symlink(config_dir / ent, path)
 
 if __name__ == '__main__':
     try:
