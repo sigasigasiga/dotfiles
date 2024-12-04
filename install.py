@@ -72,7 +72,8 @@ class TargetMap:
                 self.map = json.load(description_file)
 
     def get_target_path(self, target: str):
-        target_info = self.map and self.map.get(target)
+        target_info = self.map
+        target_info = target_info and (target_info.get(target) or target_info.get('*'))
 
         path = target_info and target_info.get("path")
         path = path.get(os.name) if type(path) is dict else path
