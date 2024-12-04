@@ -73,9 +73,9 @@ class TargetMap:
 
     def get_target_path(self, target: str):
         target_info = self.map and self.map.get(target)
-        target_info = target_info and target_info.get(os.name, target_info)
 
         path = target_info and target_info.get("path")
+        path = path.get(os.name) if type(path) is dict else path
         path = path and xdg_variables.substitute(path)
         path = path and os.path.expanduser(path)
         path = path or xdg_variables.get_config_home()
@@ -83,6 +83,7 @@ class TargetMap:
             raise ValueError("`path` must be a string or it shouldn't exist")
 
         filename = target_info and target_info.get("as")
+        filename = filename.get(os.name) if type(filename) is dict else filename
         filename = filename or target
         if not type(filename) == str:
             raise ValueError("`filename` must be a string or it shouldn't exist")
@@ -97,7 +98,7 @@ def main():
 
     program_name = sys.argv[1]
 
-    current_dir = pathlib.Path('.')
+    current_dir = pathlib.Path('.').resolve()
     config_dir = current_dir / program_name
     description_path = config_dir / DESCRIPTION_FILENAME
     target_map = TargetMap(description_path)
