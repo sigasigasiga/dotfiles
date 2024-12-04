@@ -81,6 +81,7 @@ class TargetMap:
 
         path = target_info and target_info.get("path")
         path = path and xdg_variables.substitute(path)
+        path = path and os.path.expanduser(path)
         path = path or xdg_variables.get_config_home()
         if not type(path) == str:
             raise ValueError("`path` must be a string or it shouldn't exist")
@@ -93,6 +94,8 @@ class TargetMap:
         return pathlib.Path(path) / filename
 
 def main():
+    logging.basicConfig(level = logging.DEBUG)
+
     if len(sys.argv) < 2:
         raise RuntimeError('No arg was given')
 
@@ -106,8 +109,6 @@ def main():
     for ent in os.listdir(config_dir):
         if ent == DESCRIPTION_FILENAME:
             continue
-
-        logger.info('%s', ent)
 
         path = target_map.get_target_path(ent)
         logger.info('creating directories %s', path.parent)
