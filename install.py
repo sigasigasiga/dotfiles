@@ -97,7 +97,7 @@ def main():
     if len(sys.argv) < 2:
         raise RuntimeError('No arg was given')
 
-    program_name = sys.argv[1]
+    program_name = sys.argv[1].rstrip('/\\')
 
     current_dir = pathlib.Path('.').resolve()
     config_dir = current_dir / program_name
