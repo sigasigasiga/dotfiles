@@ -8,6 +8,7 @@ import string
 import sys
 
 DESCRIPTION_FILENAME = 'description.json'
+IGNORE_FILES = frozenset([DESCRIPTION_FILENAME, '.gitignore'])
 
 logger = logging.getLogger(__name__)
 
@@ -104,7 +105,7 @@ def main():
     target_map = TargetMap(description_path)
 
     for ent in os.listdir(config_dir):
-        if ent == DESCRIPTION_FILENAME or ent == '.gitignore':
+        if ent in IGNORE_FILES:
             continue
 
         path = target_map.get_target_path(ent)
