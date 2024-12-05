@@ -7,6 +7,13 @@ local setup_adapters = function()
         command = vim.fn.exepath('lldb-dap'),
     }
 
+    dap.adapters['python'] = {
+        name = 'debugpy',
+        type = 'executable',
+        command = vim.fn.exepath('python3'),
+        args = { '-m', 'debugpy.adapter' },
+    }
+
     dap.adapters['lldb-dap'] = dap.adapters['lldb']
 
     dap.configurations.cpp = {
@@ -25,6 +32,16 @@ local setup_adapters = function()
     }
 
     dap.configurations.c = dap.configurations.cpp
+
+    dap.configurations.python = {
+        {
+            type = 'python',
+            request = 'launch',
+            name = 'Launch file',
+            program = '${file}',
+            pythonPath = vim.fn.exepath('python3')
+        }
+    }
 end
 
 local dap_sidebar_toggle = function(name)

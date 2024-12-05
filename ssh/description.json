@@ -1,0 +1,8 @@
+{
+    "config": {
+        "path": "~/.ssh"
+    },
+    "ssh-agent.service": {
+        "path": "$XDG_CONFIG_HOME/systemd/user/"
+    }
+}
