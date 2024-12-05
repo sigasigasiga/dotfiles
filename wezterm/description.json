@@ -1,0 +1,7 @@
+{
+    "wezterm": {
+        "path": {
+            "nt": "~/.config"
+        }
+    }
+}
