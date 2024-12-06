@@ -24,8 +24,8 @@ M.fill_config = function(config)
 
     config.color_scheme = scheme_for_appearance(get_appearance())
     config.use_fancy_tab_bar = false
-    config.font = wezterm.font('JetBrains Mono NL')
     config.hide_tab_bar_if_only_one_tab = hide_tab_bar
+    config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' } -- disable ligatures
 end
 
 return M
