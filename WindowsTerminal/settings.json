@@ -125,7 +125,7 @@
                 "guid": "{1e61c916-d6d2-4a2b-855e-b3019878c76c}",
                 "hidden": false,
                 "name": "bash",
-                "startingDirectory": "C:\\dev\\"
+                "startingDirectory": "C:\\projects\\"
             },
             {
                 "commandline": "C:\\Windows\\system32\\wsl.exe -d openSUSE-Tumbleweed",
