@@ -59,6 +59,7 @@ class XdgVariablesStorage:
 
     def substitute(self, tmpl: str):
         t = string.Template(tmpl)
+        # TODO: evaluate variables lazily
         return t.substitute(XDG_CONFIG_HOME = self.get_config_home(), XDG_DATA_HOME = self.get_data_home())
 
 xdg_variables = XdgVariablesStorage()
@@ -67,9 +68,12 @@ class TargetMap:
     map = None
 
     def __init__(self, description_path: pathlib.Path):
-        if os.path.isfile(description_path):
+        try:
             with open(description_path) as description_file:
                 self.map = json.load(description_file)
+        except Exception as e:
+            logger.warning('Cannot open config description: %s', str(e))
+            logger.info('Using the default target')
 
     def get_target_path(self, target: str):
         target_info = self.map
@@ -77,17 +81,17 @@ class TargetMap:
 
         path = target_info and target_info.get("path")
         path = path.get(os.name) if type(path) is dict else path
+        if not isinstance(path, None | str):
+            raise ValueError('`path` must be a `string` or `None`, got {}', type(path))
         path = path and xdg_variables.substitute(path)
         path = path and os.path.expanduser(path)
         path = path or xdg_variables.get_config_home()
-        if not type(path) == str:
-            raise ValueError("`path` must be a string or it shouldn't exist")
 
-        filename = target_info and target_info.get("as")
+        filename = target_info and target_info.get('as')
         filename = filename.get(os.name) if type(filename) is dict else filename
+        if not isinstance(filename, None | str):
+            raise ValueError("`filename` must be a string or `None`, got {}", type(filename))
         filename = filename or target
-        if not type(filename) == str:
-            raise ValueError("`filename` must be a string or it shouldn't exist")
 
         return pathlib.Path(path) / filename
 
@@ -97,10 +101,7 @@ def main():
     if len(sys.argv) < 2:
         raise RuntimeError('No arg was given')
 
-    program_name = sys.argv[1].rstrip('/\\')
-
-    current_dir = pathlib.Path('.').resolve()
-    config_dir = current_dir / program_name
+    config_dir = pathlib.Path(sys.argv[1]).resolve()
     description_path = config_dir / DESCRIPTION_FILENAME
     target_map = TargetMap(description_path)
 
