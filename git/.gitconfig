@@ -26,7 +26,7 @@
     showtool = "!showci () { rev=$(git rev-parse \"${*:-HEAD}\"); git difftool $rev~1 $rev; }; showci"
 
 ### project specific configs
-[includeIf "gitdir:C:/dev/glidewell/**"]
+[includeIf "gitdir:C:/projects/glidewell/**"]
     path = .gitconfig.work
 
 ### platform specific configs
