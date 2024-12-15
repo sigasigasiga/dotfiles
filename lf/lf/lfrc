@@ -11,8 +11,3 @@ set watch true
 
 # convenience cmd to quit
 cmd q quit
-
-
-###### AUTOSTART
-
-&[ "$LF_LEVEL" -eq 1 ] || lf -remote "send $id echoerr \"Warning: You're in a nested lf instance!\""
