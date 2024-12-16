@@ -1,5 +1,3 @@
-require('rplugin-config.dark-monitor')
-
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 vim.opt.rtp:prepend(lazypath)
 require('lazy').setup{
@@ -10,3 +8,5 @@ require('lazy').setup{
     },
     local_spec = false,
 }
+
+require('rplugin-config.dark-monitor')
