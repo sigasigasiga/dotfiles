@@ -3,8 +3,8 @@ local drw_codestyle = {
     tabstop = 4, shiftwidth = 4, softtabstop = 4, expandtab = true,
     -- autoindent settings. cinoptions are fucky, so tldr:
     -- `l1` = don't fuck up curly braces in `case`
-    -- `g0` = `private`, `public`, `protected` not indented
-    -- `N-s` = namespaces not indented
+    -- `g0` = access modifiers are not indented
+    -- `N-s` = namespaces are not indented
     -- `(0,W4` = `void foo(<CR> /* next line is 4 space indented`
     -- `(s,m1` = `void foo(<CR>` will have `)` on beginning of the next line
     -- `j1` = don't fuck up lambda definitions in an argument list
@@ -16,9 +16,32 @@ local gnu_codestyle = {
     ai = true, cin = true, cinoptions='>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1'
 }
 
--- set default codestyle
-for k, v in pairs(drw_codestyle) do
-    vim.opt[k] = v
+local glidewell_codestyle = {
+    tabstop = 4, shiftwidth = 4, softtabstop = 4, expandtab = true,
+    -- `:0` = place `case`s with the same indent as `switch`
+    -- `g0` = access modifiers are not indented
+    -- `N-s` = namespaces are not indented
+    -- `(0` = table-style argument formatting
+    -- `j1` = don't fuck up lambda definitions in an argument list
+    ai = true, cin = true, cinoptions = ':0,g0,N-s,(0,j1'
+}
+
+local set_codestyle = function(style)
+    for k, v in pairs(style) do
+        vim.opt[k] = v
+    end
 end
+
+-- set default codestyle
+set_codestyle(drw_codestyle)
+
+local id = vim.api.nvim_create_augroup('ProjectSetup', {})
+vim.api.nvim_create_autocmd({'BufRead', 'BufEnter'}, {
+    pattern = 'C:/projects/glidewell/*',
+    group = id,
+    callback = function()
+        set_codestyle(glidewell_codestyle)
+    end
+})
 
 -- TODO: FIXME: create functions to easily switch between codestyles
