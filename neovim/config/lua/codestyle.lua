@@ -35,6 +35,7 @@ end
 -- set default codestyle
 set_codestyle(drw_codestyle)
 
+-- TODO: reset the codestyle when opening another file after opening a glidewell file (idk how tho)
 local id = vim.api.nvim_create_augroup('ProjectSetup', {})
 vim.api.nvim_create_autocmd({'BufRead', 'BufEnter'}, {
     pattern = 'C:/projects/glidewell/*',
