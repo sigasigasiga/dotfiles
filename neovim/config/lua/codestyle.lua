@@ -22,8 +22,7 @@ local glidewell_codestyle = {
     -- `g0` = access modifiers are not indented
     -- `N-s` = namespaces are not indented
     -- `(0` = table-style argument formatting
-    -- `j1` = don't fuck up lambda definitions in an argument list
-    ai = true, cin = true, cinoptions = ':0,g0,N-s,(0,j1'
+    ai = true, cin = true, cinoptions = ':0,g0,N-s,(0'
 }
 
 local set_codestyle = function(style)
