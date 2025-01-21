@@ -62,3 +62,21 @@ vim.api.nvim_create_user_command('DiagDisable', function() vim.diagnostic.enable
 vim.g.netrw_banner = 0                   -- hide help banner on the top (can be shown with `I`)
 vim.g.netrw_list_hide = [[^\./$,^\../$]] -- hide `.` from directory list
 vim.g.netrw_sort_sequence = '[\\/]$'     -- dirs are shown on the top
+
+-- platform-specific options
+if vim.fn.has('wsl') == 1 then
+    -- clipboard works by default but setting this manually somehow improves the startup time.
+    -- TODO: probably i should report this?
+    vim.g.clipboard = {
+        name = 'WslClipboard',
+        copy = {
+            ['+'] = 'clip.exe',
+            ['*'] = 'clip.exe',
+        },
+        paste = {
+            ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+            ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        },
+        cache_enabled = 0,
+    }
+end
