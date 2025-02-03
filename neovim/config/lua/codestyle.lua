@@ -8,7 +8,8 @@ local drw_codestyle = {
     -- `(0,W4` = `void foo(<CR> /* next line is 4 space indented`
     -- `(s,m1` = `void foo(<CR>` will have `)` on beginning of the next line
     -- `j1` = don't fuck up lambda definitions in an argument list
-    ai = true, cin = true, cinoptions = 'l1,g0,N-s,(0,W4,(s,m1,j1'
+    -- `J1` = don't fuck up JS (and cpp2!) object declarations
+    ai = true, cin = true, cinoptions = 'l1,g0,N-s,(0,W4,(s,m1,j1,J1'
 }
 
 local gnu_codestyle = {
@@ -23,7 +24,8 @@ local glidewell_codestyle = {
     -- `N-s` = namespaces are not indented
     -- `(0` = table-style argument formatting
     -- `j1` = don't fuck up lambda definitions in an argument list
-    ai = true, cin = true, cinoptions = ':0,g0,N-s,(0,j1'
+    -- `J1` = don't fuck up JS (and cpp2!) object declarations
+    ai = true, cin = true, cinoptions = ':0,g0,N-s,(0,j1,J1'
 }
 
 local set_codestyle = function(style)
