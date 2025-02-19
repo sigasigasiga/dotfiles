@@ -4,6 +4,16 @@ local wrap_telescope_fn = function(fn, params)
     end
 end
 
+local make_fzf_build_commands = function()
+    if vim.fn.executable 'make' then
+        return 'make'
+    elseif vim.fn.executable 'cmake' then
+        return { 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release', 'cmake --build build --config Release' }
+    else
+        return nil
+    end
+end
+
 local grep_args = {
     additional_args = { '-S' }
 }
@@ -11,7 +21,13 @@ local grep_args = {
 return {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.8',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        {
+            'nvim-telescope/telescope-fzf-native.nvim',
+            build = make_fzf_build_commands(),
+        }
+    },
     cmd = 'Telescope',
     keys = {
         { '<Leader>fo',  wrap_telescope_fn('oldfiles'),             mode = 'n' }, -- 'o' -> '^O'/old
@@ -28,4 +44,9 @@ return {
         -- 'c' -> 'code'
         { '<Leader>fcs', wrap_telescope_fn('lsp_document_symbols'), mode = 'n' },
     },
+    config = function()
+        -- if we were unable to build fzf that doesn't mean
+        -- we should error out, the plugin is still usable
+        pcall(function() require 'telescope'.load_extension('fzf') end)
+    end
 }
