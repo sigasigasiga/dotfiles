@@ -5,9 +5,9 @@ local wrap_telescope_fn = function(fn, params)
 end
 
 local make_fzf_build_commands = function()
-    if vim.fn.executable 'make' then
+    if vim.fn.executable 'make' == 1 then
         return 'make'
-    elseif vim.fn.executable 'cmake' then
+    elseif vim.fn.executable 'cmake' == 1 then
         return { 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release', 'cmake --build build --config Release' }
     else
         return nil
