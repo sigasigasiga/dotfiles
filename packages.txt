@@ -1,0 +1,5 @@
+fish
+lf
+neovim
+ripgrep
+tmux
