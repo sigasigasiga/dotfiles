@@ -5,6 +5,7 @@ import logging
 import os
 import pathlib
 import string
+import subprocess
 import sys
 
 DESCRIPTION_FILENAME = 'description.json'
@@ -95,6 +96,9 @@ class TargetMap:
 
         return pathlib.Path(path) / filename
 
+def update_submodules(path: pathlib.Path):
+    return subprocess.call(['git', 'submodule', 'update', '--init', '--recursive', '--', str(path)])
+
 def main():
     logging.basicConfig(level = logging.DEBUG)
 
@@ -102,6 +106,9 @@ def main():
         raise RuntimeError('No arg was given')
 
     config_dir = pathlib.Path(sys.argv[1]).resolve()
+    if (ec := update_submodules(config_dir)) != 0:
+        logger.warn('Cannot update the submodules: %d', ec)
+
     description_path = config_dir / DESCRIPTION_FILENAME
     target_map = TargetMap(description_path)
 
