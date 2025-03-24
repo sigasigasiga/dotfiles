@@ -28,13 +28,3 @@
 ### project specific configs
 [includeIf "gitdir:C:/projects/glidewell/**"]
     path = .gitconfig.work
-
-### platform specific configs
-[includeIf "gitdir:/home/**"]
-    path = .gitconfig.unix
-[includeIf "gitdir:/tmp/**"]
-    path = .gitconfig.unix
-[includeIf "gitdir:/Users/**"]
-    path = .gitconfig.unix
-[includeIf "gitdir:/data/data/com.termux/files/home/**"]
-    path = .gitconfig.unix
