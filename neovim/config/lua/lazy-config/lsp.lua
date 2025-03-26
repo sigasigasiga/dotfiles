@@ -16,10 +16,6 @@ local on_lsp_attach = function(event)
     local bufopts = { noremap = true, silent = true }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts) -- 'a' -> autofix
-    vim.keymap.set('n', '<Leader>ci', vim.lsp.buf.implementation, bufopts) -- 'i' -> implementation
-    vim.keymap.set('n', '<Leader>cl', vim.lsp.buf.references, bufopts) -- 'l' -> list
-    vim.keymap.set('n', '<Leader>cr', vim.lsp.buf.rename, bufopts)
     vim.keymap.set({'n', 'i'}, '<C-s>', vim.lsp.buf.signature_help, bufopts) -- 's' -> signature
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
