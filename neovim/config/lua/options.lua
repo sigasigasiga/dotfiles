@@ -54,6 +54,7 @@ vim.api.nvim_create_user_command('CS', 'let @/ = ""', {})
 vim.api.nvim_create_user_command('JqReformatCurBuf', '%!jq .', {})
 
 -- diagnostics
+vim.diagnostic.config({ virtual_text = true })
 vim.api.nvim_create_user_command('DiagList', function() vim.diagnostic.setloclist() end, {})
 vim.api.nvim_create_user_command('DiagEnable', function() vim.diagnostic.enable(true) end, {})
 vim.api.nvim_create_user_command('DiagDisable', function() vim.diagnostic.enable(false) end, {})
