@@ -51,7 +51,14 @@ vim.opt.path:append('**')
 vim.api.nvim_create_user_command('CS', 'let @/ = ""', {})
 
 -- external tools
-vim.api.nvim_create_user_command('JqReformatCurBuf', '%!jq .', {})
+vim.api.nvim_create_user_command(
+    'JqReformatCurBuf',
+    function()
+        assert(vim.fn.executable 'jq' == 1)
+        vim.cmd('%!jq .')
+    end,
+    {}
+)
 
 -- diagnostics
 vim.diagnostic.config({ virtual_text = true })
