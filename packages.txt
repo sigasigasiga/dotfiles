@@ -1,4 +1,5 @@
 fish
+jq
 lf
 neovim
 ripgrep
