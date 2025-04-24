@@ -15,8 +15,6 @@ local options = {
     incsearch = true,
     -- russian layout settings. also sets default layout to english (last 2 opts)
     keymap = 'russian-jcukenwin',
-    iminsert = 0,
-    imsearch = 0,
     -- mouse
     mouse = 'a',
     -- do not fold file by default
@@ -39,8 +37,10 @@ vim.schedule(function()
     vim.opt.clipboard = 'unnamedplus'
 end)
 
--- FIXME: i dont know why but these settings cannot be set reliably via lua
-vim.cmd [[set iminsert=0 imsearch=0]]
+-- when `keymap` is set, `iminsert` and `imsearch` are fucked up, so we need to fix them
+-- however, we cannot do that using `options` table because the iteration order of `pairs()` is unspecified
+vim.opt.iminsert = 0
+vim.opt.imsearch = 0
 
 -- for some reason 'en_US' is not present on all systems (e.g. on raspberry pi), don't error out on that
 pcall(vim.cmd.language, 'en_US')
