@@ -26,6 +26,8 @@ local options = {
     -- it behaves exactly like the default statusline,
     -- except the visual character number (`%V`) is removed
     statusline = '%<%f %h%m%r%=%-14.(%l,%c%) %P',
+    -- show `:%s` substitution results in all buffer
+    inccommand = 'split',
 }
 
 for k, v in pairs(options) do
