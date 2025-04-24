@@ -17,8 +17,7 @@ local options = {
     keymap = 'russian-jcukenwin',
     iminsert = 0,
     imsearch = 0,
-    -- Xorg
-    clipboard = 'unnamedplus',
+    -- mouse
     mouse = 'a',
     -- do not fold file by default
     foldenable = false,
@@ -34,6 +33,11 @@ local options = {
 for k, v in pairs(options) do
     vim.opt[k] = v
 end
+
+-- schedule the setting after `UiEnter` because it can increase startup-time.
+vim.schedule(function()
+    vim.opt.clipboard = 'unnamedplus'
+end)
 
 -- FIXME: i dont know why but these settings cannot be set reliably via lua
 vim.cmd [[set iminsert=0 imsearch=0]]
@@ -67,24 +71,9 @@ vim.api.nvim_create_user_command('DiagEnable', function() vim.diagnostic.enable(
 vim.api.nvim_create_user_command('DiagDisable', function() vim.diagnostic.enable(false) end, {})
 
 -- netrw config
+--[[
+TODO: uncomment whenever https://github.com/neovim/neovim/issues/23650 is fixed
 vim.g.netrw_banner = 0                   -- hide help banner on the top (can be shown with `I`)
 vim.g.netrw_list_hide = [[^\./$,^\../$]] -- hide `.` from directory list
+--]]
 vim.g.netrw_sort_sequence = '[\\/]$'     -- dirs are shown on the top
-
--- platform-specific options
-if vim.fn.has('wsl') == 1 then
-    -- clipboard works by default but setting this manually somehow improves the startup time.
-    -- TODO: probably i should report this?
-    vim.g.clipboard = {
-        name = 'WslClipboard',
-        copy = {
-            ['+'] = 'clip.exe',
-            ['*'] = 'clip.exe',
-        },
-        paste = {
-            ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-            ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-        },
-        cache_enabled = 0,
-    }
-end
