@@ -6,8 +6,8 @@ return {
             'Gwrite', 'Ggrep', 'Glgrep', 'Gmove', 'Gdelete', 'Gremove', 'GBrowse',
         },
         dependencies = {
-            'tommcdo/vim-fubitive',
             'tpope/vim-rhubarb',
+            'shumphrey/fugitive-gitlab.vim',
         }
     },
 }
