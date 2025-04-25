@@ -7,6 +7,19 @@ require('lazy').setup{
         },
     },
     local_spec = false,
+    performance = {
+        rtp = {
+            disabled_plugins = {
+                'gzip',
+                'man',
+                'spellfile',
+                'tarPlugin',
+                'tohtml',
+                'tutor',
+                'zipPlugin',
+            },
+        },
+    },
 }
 
 -- TODO move it somewhere else?
