@@ -13,7 +13,7 @@ local options = {
     showmatch = true,
     hlsearch = true,
     incsearch = true,
-    -- russian layout settings. also sets default layout to english (last 2 opts)
+    -- add russian layout. use <C-6> to switch between layouts
     keymap = 'russian-jcukenwin',
     -- mouse
     mouse = 'a',
