@@ -17,6 +17,8 @@ local options = {
     keymap = 'russian-jcukenwin',
     -- mouse
     mouse = 'a',
+    -- undo will work even after nvim restarts
+    undofile = true,
     -- do not fold file by default
     foldenable = false,
     -- enable syntax
