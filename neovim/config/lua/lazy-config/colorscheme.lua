@@ -14,11 +14,13 @@ end
 return {
     {
         'ellisonleao/gruvbox.nvim',
-        opts = make_gruvbox_opts()
+        opts = make_gruvbox_opts(),
+        priority = 1000,
     },
 
     {
         'catppuccin/nvim',
-        name = 'catppuccin'
+        name = 'catppuccin',
+        priority = 1000,
     }
 }
