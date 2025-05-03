@@ -81,3 +81,15 @@ vim.g.netrw_banner = 0                   -- hide help banner on the top (can be 
 vim.g.netrw_list_hide = [[^\./$,^\../$]] -- hide `.` from directory list
 --]]
 vim.g.netrw_sort_sequence = '[\\/]$'     -- dirs are shown on the top
+
+-- YankRing ( https://x.com/justinmk/status/1911092038109364377 )
+vim.api.nvim_create_autocmd('TextYankPost', {
+    group = vim.api.nvim_create_augroup('siga/yankring', {}),
+    callback = function()
+        if vim.v.event.operator == 'y' then
+            for i = 9, 1, -1 do
+                vim.fn.setreg(tostring(i), vim.fn.getreg(tostring(i - 1)))
+            end
+        end
+    end,
+})
