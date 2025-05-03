@@ -36,7 +36,7 @@ vim.api.nvim_create_user_command(
 )
 
 -- TODO: change to RC codestyle
-local id = vim.api.nvim_create_augroup('ProjectSetup', {}) -- TODO: start all augroups with `siga/`
+local id = vim.api.nvim_create_augroup('siga/project_setup', {}) -- TODO: move project-specific configs to a separate file?
 vim.api.nvim_create_autocmd({'BufRead', 'BufEnter'}, {
     pattern = 'C:/projects/glidewell/*',
     group = id,

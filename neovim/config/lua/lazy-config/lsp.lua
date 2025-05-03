@@ -24,8 +24,7 @@ local on_lsp_attach = function(event)
         -- number of milliseconds needed for highlight to appear
         vim.opt.updatetime = 250
 
-        local lsp_highlight_group = vim.api.nvim_create_augroup('lsp_document_highlight', { clear = false })
-        vim.api.nvim_clear_autocmds { buffer = bufnr, group = 'lsp_document_highlight' }
+        local lsp_highlight_group = vim.api.nvim_create_augroup('siga/lsp/document_highlight', { clear = true })
         vim.api.nvim_create_autocmd('CursorHold', {
             callback = vim.lsp.buf.document_highlight,
             buffer = bufnr,
@@ -47,8 +46,7 @@ local on_lsp_attach = function(event)
     end
 
     if client.server_capabilities.documentFormattingProvider then
-        local lsp_format_group = vim.api.nvim_create_augroup('lsp_format', { clear = false })
-        vim.api.nvim_clear_autocmds { buffer = bufnr, group = 'lsp_format' }
+        local lsp_format_group = vim.api.nvim_create_augroup('siga/lsp/autoformat', { clear = true })
         vim.api.nvim_create_autocmd('BufWritePre', {
             -- I don't know why is it needed to wrap the callback but it is what it is
             callback = function() vim.lsp.buf.format() end,
@@ -62,7 +60,7 @@ end
 
 local cfg = function()
     vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('lsp_user_config', {}),
+        group = vim.api.nvim_create_augroup('siga/lsp/server_attach', { clear = true }),
         callback = on_lsp_attach
     })
 
