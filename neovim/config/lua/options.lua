@@ -30,6 +30,8 @@ local options = {
     statusline = '%<%f %h%m%r%=%-14.(%l,%c%) %P',
     -- show `:%s` substitution results in all buffer
     inccommand = 'split',
+    -- enable project-specific configs. these are safe, see `:h trust`
+    exrc = true,
 }
 
 for k, v in pairs(options) do
