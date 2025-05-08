@@ -44,17 +44,6 @@ local on_lsp_attach = function(event)
             desc = 'Clear all the references',
         })
     end
-
-    if client.server_capabilities.documentFormattingProvider then
-        local lsp_format_group = vim.api.nvim_create_augroup('siga/lsp/autoformat', { clear = true })
-        vim.api.nvim_create_autocmd('BufWritePre', {
-            -- I don't know why is it needed to wrap the callback but it is what it is
-            callback = function() vim.lsp.buf.format() end,
-            buffer = bufnr,
-            group = lsp_format_group,
-            desc = 'Format document on write'
-        })
-    end
 end
 
 
