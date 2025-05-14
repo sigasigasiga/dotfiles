@@ -83,8 +83,6 @@ vim.g.netrw_banner = 0                   -- hide help banner on the top (can be 
 vim.g.netrw_list_hide = [[^\./$,^\../$]] -- hide `.` from directory list
 --]]
 vim.g.netrw_sort_sequence = '[\\/]$'     -- dirs are shown on the top
-vim.g.netrw_altv = 1 -- open vertical splits on the right
-vim.g.netrw_alto = 1 -- open horizontal splits on the bottom
 
 -- YankRing ( https://x.com/justinmk/status/1911092038109364377 )
 vim.api.nvim_create_autocmd('TextYankPost', {
