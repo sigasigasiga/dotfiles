@@ -12,7 +12,7 @@ local on_lsp_attach = function(event)
     -- Enable completion triggered by <C-x><C-o>
     vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-    -- 'c' stands for 'code'
+    -- FIXME: we should set the keybindings only once
     local bufopts = { noremap = true, silent = true }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
@@ -62,7 +62,8 @@ local cfg = function()
     setup_language_server('clangd', {
         cmd = { 'clangd', '--fallback-style=none' },
         on_attach = function(client, bufnr)
-            vim.keymap.set('n', '<Leader>cs', ':ClangdSwitchSourceHeader<CR>', bufopts) -- 's' -> switch
+            local bufopts = { noremap = true, silent = true }
+            vim.keymap.set('n', 'grs', ':ClangdSwitchSourceHeader<CR>', bufopts) -- 's' -> switch
         end
     })
 
