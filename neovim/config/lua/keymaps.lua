@@ -5,7 +5,7 @@ local normal_mode = 'n'
 
 -- MARK: actual keymap configs
 
--- copy `+<line number> <filename>`
-keymap(normal_mode, 'yp', ':let @+="+" . line(".") . " " . expand("%")<CR>', opts)
 -- copy `<filename>:<line_number>`
+-- FIXME: remove duplicate keymaps
+keymap(normal_mode, 'yp', ':let @+=expand("%") . ":" . line(".")<CR>', opts)
 keymap(normal_mode, 'yP', ':let @+=expand("%") . ":" . line(".")<CR>', opts)
