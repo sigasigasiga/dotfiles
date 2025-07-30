@@ -8,5 +8,9 @@
             "posix": "$XDG_DATA_HOME/nvim",
             "nt": "$XDG_DATA_HOME/nvim-data"
         }
+    },
+    "env": {
+        "path": "$XDG_CONFIG_HOME/environment.d",
+        "as": "60-editor.conf"
     }
 }
