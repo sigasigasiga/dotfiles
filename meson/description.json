@@ -1,5 +1,7 @@
 {
-    "meson": {
-        "path": "$XDG_DATA_HOME/"
+    "*": {
+        "meson": {
+            "path": "$XDG_DATA_HOME/"
+        }
     }
 }

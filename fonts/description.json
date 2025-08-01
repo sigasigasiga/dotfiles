@@ -1,5 +1,9 @@
 {
-    "fonts": {
-        "path": "~/.local/share/"
-    }
+    "posix": {
+        "fonts": {
+            "path": "~/.local/share/"
+        }
+    },
+
+    "*": null
 }

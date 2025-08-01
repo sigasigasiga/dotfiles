@@ -8,6 +8,8 @@ import string
 import subprocess
 import sys
 
+from typing import Any
+
 DESCRIPTION_FILENAME = 'description.json'
 IGNORE_FILES = frozenset([DESCRIPTION_FILENAME, '.gitignore'])
 
@@ -65,36 +67,64 @@ class XdgVariablesStorage:
 
 xdg_variables = XdgVariablesStorage()
 
+class TargetIsSkippedError(Exception):
+    pass
+
+"""
+If `k` exists in `m` and its value is `None`, throw `TargetIsSkippedError`
+If `k` does not exist in `m`, return `None`
+If `m` is `None`, return `None`
+Otherwise, return `m[k]`
+"""
+def get_skippable(m: Any, k: Any):
+    if m is None:
+        return None
+
+    try:
+        ret = m[k]
+        if ret is None:
+            raise TargetIsSkippedError(f'`{k}` key is set to `null`')
+        else:
+            return ret
+    except KeyError:
+        return None
+
 class TargetMap:
-    map = None
+    description: None | Any = None
 
     def __init__(self, description_path: pathlib.Path):
         try:
             with open(description_path) as description_file:
-                self.map = json.load(description_file)
+                self.description = json.load(description_file)
         except Exception as e:
             logger.warning('Cannot open config description: %s', str(e))
             logger.info('Using the default target')
 
-    def get_target_path(self, target: str):
-        target_info = self.map
-        target_info = target_info and (target_info.get(target) or target_info.get('*'))
+    def get_target_path(self, target: str) -> pathlib.Path | None:
+        if target in IGNORE_FILES:
+            return None
 
-        path = target_info and target_info.get("path")
-        path = path.get(os.name) if type(path) is dict else path
-        if not isinstance(path, None | str):
-            raise ValueError('`path` must be a `string` or `None`, got {}', type(path))
-        path = path and xdg_variables.substitute(path)
-        path = path and os.path.expanduser(path)
-        path = path or xdg_variables.get_config_home()
+        try:
+            desc = self.description
+            os_desc = get_skippable(desc, os.name) or get_skippable(desc, '*')
+            target_info = get_skippable(os_desc, target) or get_skippable(os_desc, '*')
 
-        filename = target_info and target_info.get('as')
-        filename = filename.get(os.name) if type(filename) is dict else filename
-        if not isinstance(filename, None | str):
-            raise ValueError("`filename` must be a string or `None`, got {}", type(filename))
-        filename = filename or target
+            path = target_info and target_info.get('path') # `"path": null` stands for default
+            if not isinstance(path, None | str):
+                raise ValueError('`path` must be a `string` or `None`, got {}', type(path))
+            path = path and xdg_variables.substitute(path)
+            path = path and os.path.expanduser(path)
+            path = path or xdg_variables.get_config_home()
 
-        return pathlib.Path(path) / filename
+            filename = target_info and target_info.get('as') # `"as": null` stands for default
+            if not isinstance(filename, None | str):
+                raise ValueError('`filename` must be a string or `None`, got {}', type(filename))
+            filename = filename or target
+
+            return pathlib.Path(path) / filename
+        except TargetIsSkippedError as e:
+            logger.info('Target `%s` is explicitly skipped: %s', target, e)
+            return None
 
 def update_submodules(path: pathlib.Path):
     return subprocess.call(['git', 'submodule', 'update', '--init', '--recursive', '--', str(path)])
@@ -107,24 +137,21 @@ def main():
 
     config_dir = pathlib.Path(sys.argv[1]).resolve()
     if (ec := update_submodules(config_dir)) != 0:
-        logger.warn('Cannot update the submodules: %d', ec)
+        logger.warning('Cannot update the submodules: %d', ec)
 
     description_path = config_dir / DESCRIPTION_FILENAME
     target_map = TargetMap(description_path)
 
     for ent in os.listdir(config_dir):
-        if ent in IGNORE_FILES:
-            continue
+        if path := target_map.get_target_path(ent):
+            logger.info('Creating directories `%s`', path.parent)
+            logger.info('Symlinking `%s` to `%s`', config_dir / ent, path)
 
-        path = target_map.get_target_path(ent)
-        logger.info('Creating directories `%s`', path.parent)
-        logger.info('Symlinking `%s` to `%s`', config_dir / ent, path)
-
-        try:
-            os.makedirs(path.parent, mode = 0o700, exist_ok = True)
-            os.symlink(config_dir / ent, path)
-        except Exception as  e:
-            logger.warning('Cannot install `%s`: %s', ent, str(e))
+            try:
+                os.makedirs(path.parent, mode = 0o700, exist_ok = True)
+                os.symlink(config_dir / ent, path)
+            except Exception as  e:
+                logger.warning('Cannot install `%s`: %s', ent, str(e))
 
 if __name__ == '__main__':
     try:

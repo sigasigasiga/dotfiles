@@ -1,5 +1,9 @@
 {
-    "PowerShell": {
-        "path": "~/Documents"
-    }
+    "nt": {
+        "PowerShell": {
+            "path": "~/Documents"
+        }
+    },
+
+    "*": null
 }
