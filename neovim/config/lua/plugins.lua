@@ -124,6 +124,8 @@ local lsp_servers = {
     'lua_ls',
     'pyright',
     'rust_analyzer',
+    'bashls',
+    'ts_ls',
 }
 
 for _, server_name in ipairs(lsp_servers) do
