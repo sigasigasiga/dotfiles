@@ -26,10 +26,6 @@ vim.lsp.config('*', {})
 
 vim.lsp.config('clangd', {
     cmd = { 'clangd', '--fallback-style=none' },
-    on_attach = function(client, bufnr)
-        local bufopts = { noremap = true, silent = true }
-        vim.keymap.set('n', 'grs', ':ClangdSwitchSourceHeader<CR>', bufopts) -- 's' -> switch
-    end
 })
 
 vim.lsp.config('lua_ls', {
@@ -111,6 +107,10 @@ local on_lsp_attach = function(event)
             group = lsp_highlight_group,
             desc = 'Clear all the references',
         })
+    end
+
+    if client:supports_method 'textDocument/switchSourceHeader' then
+        vim.keymap.set('n', 'grs', vim.cmd.LspClangdSwitchSourceHeader, bufopts) -- 's' -> switch
     end
 end
 
