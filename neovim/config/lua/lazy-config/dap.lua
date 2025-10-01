@@ -1,5 +1,5 @@
 local setup_adapters = function()
-    local dap = require'dap'
+    local dap = require 'dap'
 
     dap.adapters['lldb'] = {
         name = 'lldb',
@@ -16,7 +16,7 @@ local setup_adapters = function()
 
     dap.adapters['lldb-dap'] = dap.adapters['lldb']
 
-    dap.configurations.cpp = {
+    local lldb_cfg = {
         {
             name = '(lldb) Custom path',
             type = 'lldb',
@@ -31,7 +31,9 @@ local setup_adapters = function()
         },
     }
 
-    dap.configurations.c = dap.configurations.cpp
+    dap.configurations.cpp = lldb_cfg
+    dap.configurations.c = lldb_cfg
+    dap.configurations.rust = lldb_cfg
 
     dap.configurations.python = {
         {
@@ -45,7 +47,7 @@ local setup_adapters = function()
 end
 
 local dap_sidebar_toggle = function(name)
-    local widgets = require'dap.ui.widgets'
+    local widgets = require 'dap.ui.widgets'
     widgets.sidebar(widgets[name]).toggle()
 end
 
