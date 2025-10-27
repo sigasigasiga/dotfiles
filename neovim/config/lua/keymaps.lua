@@ -12,3 +12,6 @@ keymap(normal_mode, 'yP', ':let @+=expand("%") . ":" . line(".")<CR>', opts)
 
 -- unmap the default behavior of `gr` so that it wouldn't clash with the default lsp mappings
 keymap(normal_mode, 'gr', '', opts)
+
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
