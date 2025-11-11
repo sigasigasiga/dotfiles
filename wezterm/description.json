@@ -1,7 +1,0 @@
-{
-    "$merge": false,
-
-    "wezterm": {
-        "path": "~/.config"
-    }
-}
