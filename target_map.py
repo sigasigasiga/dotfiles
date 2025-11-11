@@ -37,17 +37,17 @@ class TargetIsSkippedError(Exception):
     pass
 
 class TargetMap:
-    description: None | typing.Any = None
+    desc: None | typing.Any = None
 
     def __init__(self, config_dir: pathlib.Path):
-        self.description = description.read_description(config_dir)
+        self.desc = description.read_description_dir(config_dir)
 
     def get_target_path(self, target: str) -> pathlib.Path | None:
         if is_ignored(target):
             return None
 
         try:
-            desc = self.description
+            desc = self.desc
             target_info = get_skippable(desc, target) or get_skippable(desc, '*')
 
             path = target_info and target_info.get('path') # `"path": null` stands for default
