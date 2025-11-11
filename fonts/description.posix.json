@@ -1,0 +1,7 @@
+{
+    "$merge": false,
+
+    "fonts": {
+        "path": "~/.local/share/"
+    }
+}

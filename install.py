@@ -1,130 +1,14 @@
 #!/usr/bin/env python3
 
-import json
 import logging
 import os
 import pathlib
-import string
 import subprocess
 import sys
 
-from typing import Any
-
-DESCRIPTION_FILENAME = 'description.json'
-IGNORE_FILES = frozenset([DESCRIPTION_FILENAME, '.gitignore'])
+from target_map import TargetMap
 
 logger = logging.getLogger(__name__)
-
-class XdgVariablesStorage:
-    config_home = None
-    data_home = None
-
-    @staticmethod
-    def __get_xdg_env(var: str):
-        ret = os.getenv(var)
-
-        if ret is None:
-            logger.warning('`%s` is not set', var)
-        elif not os.path.isabs(ret):
-            raise RuntimeError('{} must contain an absolute path'.format(var))
-
-        return ret
-
-    def get_config_home(self):
-        def make_default():
-            match os.name:
-                case 'nt':
-                    return os.path.expandvars('%LOCALAPPDATA%')
-                case 'posix':
-                    return os.path.expanduser('~/.config')
-                case _:
-                    raise RuntimeError('Unsupported OS `{}`'.format(os.name))
-
-        if self.config_home is None:
-            self.config_home = self.__get_xdg_env('XDG_CONFIG_HOME') or make_default()
-
-        return self.config_home
-
-    def get_data_home(self):
-        def make_default():
-            match os.name:
-                case 'nt':
-                    return os.path.expandvars('%LOCALAPPDATA%')
-                case 'posix':
-                    return os.path.expanduser('~/.local/share')
-                case _:
-                    raise RuntimeError('Unsupported OS `{}`'.format(os.name))
-
-        if self.data_home is None:
-            self.data_home = self.__get_xdg_env('XDG_DATA_HOME') or make_default()
-
-        return self.data_home
-
-    def substitute(self, tmpl: str):
-        t = string.Template(tmpl)
-        # TODO: evaluate variables lazily
-        return t.substitute(XDG_CONFIG_HOME = self.get_config_home(), XDG_DATA_HOME = self.get_data_home())
-
-xdg_variables = XdgVariablesStorage()
-
-class TargetIsSkippedError(Exception):
-    pass
-
-"""
-If `k` exists in `m` and its value is `None`, throw `TargetIsSkippedError`
-If `k` does not exist in `m`, return `None`
-If `m` is `None`, return `None`
-Otherwise, return `m[k]`
-"""
-def get_skippable(m: Any, k: Any):
-    if m is None:
-        return None
-
-    try:
-        ret = m[k]
-        if ret is None:
-            raise TargetIsSkippedError(f'`{k}` key is set to `null`')
-        else:
-            return ret
-    except KeyError:
-        return None
-
-class TargetMap:
-    description: None | Any = None
-
-    def __init__(self, description_path: pathlib.Path):
-        try:
-            with open(description_path) as description_file:
-                self.description = json.load(description_file)
-        except Exception as e:
-            logger.warning('Cannot open config description: %s', str(e))
-            logger.info('Using the default target')
-
-    def get_target_path(self, target: str) -> pathlib.Path | None:
-        if target in IGNORE_FILES:
-            return None
-
-        try:
-            desc = self.description
-            os_desc = get_skippable(desc, os.name) or get_skippable(desc, '*')
-            target_info = get_skippable(os_desc, target) or get_skippable(os_desc, '*')
-
-            path = target_info and target_info.get('path') # `"path": null` stands for default
-            if not isinstance(path, None | str):
-                raise ValueError('`path` must be a `string` or `None`, got {}', type(path))
-            path = path and xdg_variables.substitute(path)
-            path = path and os.path.expanduser(path)
-            path = path or xdg_variables.get_config_home()
-
-            filename = target_info and target_info.get('as') # `"as": null` stands for default
-            if not isinstance(filename, None | str):
-                raise ValueError('`filename` must be a string or `None`, got {}', type(filename))
-            filename = filename or target
-
-            return pathlib.Path(path) / filename
-        except TargetIsSkippedError as e:
-            logger.info('Target `%s` is explicitly skipped: %s', target, e)
-            return None
 
 def update_submodules(path: pathlib.Path):
     return subprocess.call(['git', 'submodule', 'update', '--init', '--recursive', '--', str(path)])
@@ -139,8 +23,7 @@ def main():
     if (ec := update_submodules(config_dir)) != 0:
         logger.warning('Cannot update the submodules: %d', ec)
 
-    description_path = config_dir / DESCRIPTION_FILENAME
-    target_map = TargetMap(description_path)
+    target_map = TargetMap(config_dir)
 
     for ent in os.listdir(config_dir):
         if path := target_map.get_target_path(ent):

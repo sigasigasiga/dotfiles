@@ -1,9 +1,3 @@
 {
-    "nt": {
-        "settings.json": {
-            "path": "$XDG_CONFIG_HOME/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState"
-        }
-    },
-
     "*": null
 }

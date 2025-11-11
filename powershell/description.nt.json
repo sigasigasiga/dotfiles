@@ -1,0 +1,7 @@
+{
+    "$merge": false,
+
+    "PowerShell": {
+        "path": "~/Documents"
+    }
+}

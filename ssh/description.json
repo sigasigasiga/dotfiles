@@ -1,17 +1,6 @@
 {
-    "posix": {
-        "config": {
-            "path": "~/.ssh"
-        },
-        "ssh-agent.service": {
-            "path": "$XDG_CONFIG_HOME/systemd/user/"
-        }
+    "config": {
+        "path": "~/.ssh"
     },
-
-    "*": {
-        "config": {
-            "path": "~/.ssh"
-        },
-        "ssh-agent.service": null
-    }
+    "ssh-agent.service": null
 }
