@@ -2,7 +2,7 @@ import logging
 import os
 import string
 
-__logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 class XdgVariablesStorage:
     __config_home = None
@@ -13,7 +13,7 @@ class XdgVariablesStorage:
         ret = os.getenv(var)
 
         if ret is None:
-            __logger.warning('`%s` is not set', var)
+            logger.warning('`%s` is not set', var)
         elif not os.path.isabs(ret):
             raise RuntimeError(f'{var} must contain an absolute path')
 
