@@ -1,0 +1,7 @@
+{
+    "containers": null,
+
+    "distrobox": {
+        "path": "$XDG_CONFIG_HOME/"
+    }
+}
