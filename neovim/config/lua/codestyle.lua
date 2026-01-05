@@ -34,13 +34,3 @@ vim.api.nvim_create_user_command(
     function(params) set_codestyle(codestyles[params.args]) end,
     { nargs = 1 }
 )
-
--- TODO: change to RC codestyle
-local id = vim.api.nvim_create_augroup('siga/project_setup', {}) -- TODO: move project-specific configs to a separate file?
-vim.api.nvim_create_autocmd({'BufRead', 'BufEnter'}, {
-    pattern = 'C:/projects/glidewell/*',
-    group = id,
-    callback = function()
-        set_codestyle(glidewell_codestyle)
-    end
-})
