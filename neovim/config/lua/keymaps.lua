@@ -7,8 +7,8 @@ local normal_mode = 'n'
 
 -- copy `<filename>:<line_number>`
 -- FIXME: remove duplicate keymaps
-keymap(normal_mode, 'yp', ':let @+=expand("%") . ":" . line(".")<CR>', opts)
-keymap(normal_mode, 'yP', ':let @+=expand("%") . ":" . line(".")<CR>', opts)
+keymap(normal_mode, 'yp', ':let @+=expand("%:.") . ":" . line(".")<CR>', opts)
+keymap(normal_mode, 'yP', ':let @+=expand("%:.") . ":" . line(".")<CR>', opts)
 
 -- unmap the default behavior of `gr` so that it wouldn't clash with the default lsp mappings
 keymap(normal_mode, 'gr', '', opts)
