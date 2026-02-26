@@ -16,5 +16,21 @@ vim.keymap.set(
     opts
 )
 
+-- copy `<filename>:<start_line>-<end_line>` for visual selection
+vim.keymap.set(
+    'v',
+    '<Leader>yp',
+    function()
+        local path = vim.fn.expand('%:.')
+        local start_line = vim.fn.line('v')
+        local end_line = vim.fn.line('.')
+        if start_line > end_line then
+            start_line, end_line = end_line, start_line
+        end
+        vim.fn.setreg('+', path .. ':' .. start_line .. '-' .. end_line)
+    end,
+    opts
+)
+
 -- unmap the default behavior of `gr` so that it wouldn't clash with the default lsp mappings
 vim.keymap.set('n', 'gr', '', opts)
