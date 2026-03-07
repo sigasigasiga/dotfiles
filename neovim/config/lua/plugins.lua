@@ -126,6 +126,7 @@ local lsp_servers = {
     'rust_analyzer',
     'bashls',
     'ts_ls',
+    'nixd',
 }
 
 for _, server_name in ipairs(lsp_servers) do
