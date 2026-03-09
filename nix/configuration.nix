@@ -134,6 +134,7 @@
     cargo
 
     osu-lazer-bin
+    steam
 
     #telegram-desktop
     bitwarden-desktop
