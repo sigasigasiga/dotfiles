@@ -102,8 +102,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    google-chrome
-
     python3
     neovim
     distrobox
@@ -137,9 +135,13 @@
     steam
 
     #telegram-desktop
+    google-chrome
     bitwarden-desktop
     spotify
     megasync
+
+
+    btrfs-progs
 
     gnomeExtensions.appindicator
     gnomeExtensions.caffeine
