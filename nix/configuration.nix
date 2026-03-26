@@ -102,6 +102,8 @@
   # Install steam
   programs.steam.enable = true;
 
+  programs.gpu-screen-recorder.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -141,6 +143,7 @@
     bitwarden-desktop
     spotify
     megasync
+    gpu-screen-recorder-gtk
 
 
     btrfs-progs
