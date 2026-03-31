@@ -147,6 +147,7 @@
     spotify
     megasync
     gpu-screen-recorder-gtk
+    mpv
 
 
     btrfs-progs
