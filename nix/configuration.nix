@@ -148,6 +148,7 @@
     megasync
     gpu-screen-recorder-gtk
     mpv
+    ghostty
 
 
     btrfs-progs
