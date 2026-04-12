@@ -149,6 +149,7 @@
     gpu-screen-recorder-gtk
     mpv
     ghostty
+    zeal
 
 
     btrfs-progs
