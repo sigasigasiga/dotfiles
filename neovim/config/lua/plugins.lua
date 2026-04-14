@@ -1,26 +1,13 @@
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-vim.opt.rtp:prepend(lazypath)
-require('lazy').setup{
-    spec = {
-        {
-            import = 'lazy-config',
-        },
-    },
-    local_spec = false,
-    performance = {
-        rtp = {
-            disabled_plugins = {
-                'gzip',
-                'man',
-                'spellfile',
-                'tarPlugin',
-                'tohtml',
-                'tutor',
-                'zipPlugin',
-            },
-        },
-    },
-}
+require('lazy-config.ai')
+require('lazy-config.autopairs')
+require('lazy-config.colorscheme')
+require('lazy-config.dap')
+require('lazy-config.fileline')
+require('lazy-config.git')
+require('lazy-config.lsp')
+require('lazy-config.quickfix')
+require('lazy-config.sudo')
+require('lazy-config.telescope')
 
 vim.lsp.config('*', {})
 

@@ -1,3 +1,1 @@
-return {
-    'lewis6991/fileline.nvim'
-}
+vim.pack.add { 'https://github.com/lewis6991/fileline.nvim' }

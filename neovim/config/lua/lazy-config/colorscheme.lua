@@ -1,26 +1,14 @@
-local make_gruvbox_opts = function()
-    local gruvbox_gray = '#504945'
+vim.pack.add {
+    'https://github.com/ellisonleao/gruvbox.nvim',
+    { src = 'https://github.com/catppuccin/nvim', name = 'catppuccin' },
+}
 
-    return {
-        contrast = 'hard',
-        overrides = {
-            LspReferenceRead = { bg = gruvbox_gray },
-            LspReferenceText = { bg = gruvbox_gray },
-            LspReferenceWrite = { bg = gruvbox_gray },
-        }
-    }
-end
-
-return {
-    {
-        'ellisonleao/gruvbox.nvim',
-        opts = make_gruvbox_opts(),
-        priority = 1000,
-    },
-
-    {
-        'catppuccin/nvim',
-        name = 'catppuccin',
-        priority = 1000,
+local gruvbox_gray = '#504945'
+require('gruvbox').setup {
+    contrast = 'hard',
+    overrides = {
+        LspReferenceRead = { bg = gruvbox_gray },
+        LspReferenceText = { bg = gruvbox_gray },
+        LspReferenceWrite = { bg = gruvbox_gray },
     }
 }

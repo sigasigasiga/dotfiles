@@ -1,3 +1,1 @@
-return {
-    'lambdalisue/suda.vim'
-}
+vim.pack.add { 'https://github.com/lambdalisue/suda.vim' }
