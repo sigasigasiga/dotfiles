@@ -130,10 +130,7 @@ local lsp_servers = {
 }
 
 for _, server_name in ipairs(lsp_servers) do
-    local server_exec = vim.lsp.config[server_name].cmd[1]
-    if vim.fn.executable(server_exec) == 1 then
-        vim.lsp.enable(server_name)
-    end
+    vim.lsp.enable(server_name)
 end
 
 -- TODO move it somewhere else?
