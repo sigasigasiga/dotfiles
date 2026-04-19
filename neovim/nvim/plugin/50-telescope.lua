@@ -1,21 +1,37 @@
+local function build_telescope_fzf_native(path)
+    local opts = {
+        cwd = path
+    }
+
+    local build_fn
+    if vim.fn.executable 'make' == 1 then
+        vim.notify('Building telescope-fzf-native.nvim with Make...', vim.log.levels.INFO)
+        build_fn = function()
+            return vim.system({ 'make' }, opts):wait().code == 0
+        end
+    elseif vim.fn.executable 'cmake' == 1 then
+        vim.notify('Building telescope-fzf-native.nvim with CMake...', vim.log.levels.INFO)
+        build_fn = function()
+            return
+                vim.system({ 'cmake', '-S.', '-GNinja', '-Bbuild', '-DCMAKE_BUILD_TYPE=Release' }, opts):wait().code == 0 and
+                vim.system({ 'cmake', '--build', 'build', '--config', 'Release' }, opts):wait().code == 0
+        end
+    end
+
+    if not build_fn then
+        vim.notify('No build tools available, skipping telescope-fzf-native.nvim build', vim.log.levels.INFO)
+    elseif build_fn() then
+        vim.notify('telescope-fzf-native.nvim was built successfully', vim.log.levels.INFO)
+    else
+        vim.notify('Could not build telescope-fzf-native.nvim', vim.log.levels.ERROR)
+    end
+end
+
 vim.api.nvim_create_autocmd('PackChanged', {
     callback = function(ev)
         local name, kind = ev.data.spec.name, ev.data.kind
         if name == 'telescope-fzf-native.nvim' and (kind == 'install' or kind == 'update') then
-            local opts = {
-                cwd = vim.fn.stdpath('data') .. '/site/pack/core/opt/' .. name
-            }
-
-            vim.print 'Building telescope-fzf-native.nvim...'
-
-            -- FIXME: it doesnt work :(
-            if vim.fn.executable 'make' == 1 then
-                vim.system({ 'make' }, opts):wait()
-            elseif vim.fn.executable 'cmake' == 1 then
-                -- because `make` is not available we surely need to try ninja instead
-                vim.system({ 'cmake -S. -GNinja -Bbuild -DCMAKE_BUILD_TYPE=Release' }, opts):wait()
-                vim.system({ 'cmake --build build --config Release' }, opts):wait()
-            end
+            build_telescope_fzf_native(ev.data.path)
         end
     end
 })
