@@ -123,6 +123,7 @@
     jq
 
     nixd # Nix LSP
+    lua-language-server
 
     github-copilot-cli
 
