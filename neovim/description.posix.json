@@ -1,13 +1,6 @@
 {
     "$merge": false,
 
-    "config": {
-        "path": "$XDG_CONFIG_HOME/",
-        "as": "nvim"
-    },
-    "lazy": {
-        "path": "$XDG_DATA_HOME/nvim"
-    },
     "env": {
         "path": "$XDG_CONFIG_HOME/environment.d",
         "as": "60-editor.conf"
