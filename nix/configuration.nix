@@ -151,6 +151,7 @@
     mpv
     ghostty
     zeal
+    pinta
 
 
     btrfs-progs
