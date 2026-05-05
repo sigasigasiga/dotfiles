@@ -123,6 +123,7 @@
     lf
     htop
     fish
+    file
 
     ripgrep
     jq
