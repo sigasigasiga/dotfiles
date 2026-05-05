@@ -160,6 +160,7 @@
     ghostty
     zeal
     pinta
+    libreoffice
 
 
     btrfs-progs
