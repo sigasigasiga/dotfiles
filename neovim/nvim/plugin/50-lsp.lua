@@ -56,7 +56,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     callback = on_lsp_attach
 })
 
-local lsp_servers = {
+vim.lsp.enable {
     'clangd',
     'lua_ls',
     'pyright',
@@ -65,7 +65,3 @@ local lsp_servers = {
     'ts_ls',
     'nixd',
 }
-
-for _, server_name in ipairs(lsp_servers) do
-    vim.lsp.enable(server_name)
-end
