@@ -4,10 +4,6 @@ vim.pack.add {
 
 vim.lsp.config('*', {})
 
-vim.lsp.config('clangd', {
-    cmd = { 'clangd', '--fallback-style=none' },
-})
-
 local on_lsp_attach = function(event)
     local bufnr = event.buf
 
