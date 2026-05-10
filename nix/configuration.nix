@@ -132,6 +132,7 @@
 
     nixd # Nix LSP
     lua-language-server
+    pyright
 
     github-copilot-cli
 
