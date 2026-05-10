@@ -20,6 +20,11 @@ def main():
         raise RuntimeError('No arg was given')
 
     config_dir = pathlib.Path(sys.argv[1]).resolve()
+
+    # Yes, TOCTOU but idgaf
+    if not config_dir.is_dir():
+        raise RuntimeError('The arg must be a directory')
+
     if (ec := update_submodules(config_dir)) != 0:
         logger.warning('Cannot update the submodules: %d', ec)
 
