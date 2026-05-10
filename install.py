@@ -25,6 +25,9 @@ def main():
     if not config_dir.is_dir():
         raise RuntimeError('The arg must be a directory')
 
+    if config_dir.name.startswith('.'):
+        raise RuntimeError('Folders that start with `.` are used for service purposes')
+
     if (ec := update_submodules(config_dir)) != 0:
         logger.warning('Cannot update the submodules: %d', ec)
 
