@@ -10,8 +10,7 @@ local on_lsp_attach = function(event)
     -- Enable completion triggered by <C-x><C-o>
     vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-    -- FIXME: should we set the keybindings only once?
-    local bufopts = { noremap = true, silent = true }
+    local bufopts = { noremap = true, silent = true, buf = bufnr }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
     vim.keymap.set({'n', 'i'}, '<C-s>', vim.lsp.buf.signature_help, bufopts) -- 's' -> signature
