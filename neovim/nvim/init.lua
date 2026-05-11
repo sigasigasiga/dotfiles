@@ -128,9 +128,6 @@ vim.keymap.set(
     keymap_opts
 )
 
--- unmap the default behavior of `gr` so that it wouldn't clash with the default lsp mappings
-vim.keymap.set('n', 'gr', '', keymap_opts)
-
 -- codestyles
 local codestyles = {
     drw = {

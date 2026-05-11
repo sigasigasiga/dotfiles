@@ -2,6 +2,9 @@ vim.pack.add {
     'https://github.com/neovim/nvim-lspconfig',
 }
 
+-- unmap the default behavior of `gr` so that it wouldn't clash with the default lsp mappings
+vim.keymap.set('n', 'gr', '', { noremap = true, silent = true })
+
 vim.lsp.config('*', {})
 
 local on_lsp_attach = function(event)
