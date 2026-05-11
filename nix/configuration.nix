@@ -102,7 +102,10 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.sessionVariables.EDITOR = "nvim";
+  environment.sessionVariables = {
+      EDITOR = "nvim";
+      MANPAGER = "nvim +Man!";
+  };
 
   # Install steam
   programs.steam.enable = true;
