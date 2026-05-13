@@ -17,8 +17,8 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "gruvbox.nvim": {
-      "rev": "154eb5ff5b96d0641307113fa385eaf0d36d9796",
-      "src": "https://github.com/ellisonleao/gruvbox.nvim"
+      "rev": "cbec851a6b542fb3dc5ead7a10d82b0994b5be88",
+      "src": "https://github.com/sigasigasiga/gruvbox.nvim"
     },
     "nvim-autopairs": {
       "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
