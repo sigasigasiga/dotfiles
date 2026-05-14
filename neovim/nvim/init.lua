@@ -5,26 +5,16 @@ local options = {
     number = true,
     -- show N lines above/below the cursor
     scrolloff = 5,
-    -- autocompletions in command mode
-    wildmenu = true,
-    wildmode = { 'list', 'longest', 'full' },
     -- autocompletions in insert mode options
     completeopt = 'menu,menuone,popup,fuzzy',
     -- long lines will be wrapped onto the next line
     linebreak = true,
-    wrap = true,
     -- search
     showmatch = true,
-    hlsearch = true,
-    incsearch = true,
     -- add russian layout. use <C-6> to switch between layouts
     keymap = 'russian-jcukenwin',
-    -- mouse
-    mouse = 'a',
     -- do not fold file by default
     foldenable = false,
-    -- enable syntax
-    syntax = 'on',
     -- show trailing whitespaces and tab characters
     list = true,
     -- it behaves exactly like the default statusline,
