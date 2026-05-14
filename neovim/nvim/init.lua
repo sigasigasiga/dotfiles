@@ -8,6 +8,8 @@ local options = {
     -- autocompletions in command mode
     wildmenu = true,
     wildmode = { 'list', 'longest', 'full' },
+    -- autocompletions in insert mode options
+    completeopt = 'menu,menuone,popup,fuzzy',
     -- long lines will be wrapped onto the next line
     linebreak = true,
     wrap = true,
