@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./neovim.nix
+      ./bitwarden.nix
     ];
 
   # Bootloader.
@@ -105,6 +106,11 @@
 
   programs.neovim-config.enable = true;
 
+  programs.bitwarden-config = {
+    enable = true;
+    sshAgent = true;
+  };
+
   # Install steam
   programs.steam.enable = true;
 
@@ -149,7 +155,6 @@
 
     #telegram-desktop
     google-chrome
-    bitwarden-desktop
     spotify
     megasync
     gpu-screen-recorder-gtk
