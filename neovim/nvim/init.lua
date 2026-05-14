@@ -5,8 +5,6 @@ local options = {
     number = true,
     -- show N lines above/below the cursor
     scrolloff = 5,
-    -- autocompletions in insert mode options
-    completeopt = 'menu,menuone,popup,fuzzy',
     -- long lines will be wrapped onto the next line
     linebreak = true,
     -- search
@@ -42,6 +40,9 @@ vim.opt.imsearch = 0
 
 -- for some reason 'en_US' is not present on all systems (e.g. on raspberry pi), don't error out on that
 pcall(vim.cmd.language, 'en_US')
+
+-- fuzzy search is awesome. menuone allows to see the docs for the only option available
+vim.opt.completeopt:append('menuone,fuzzy')
 
 -- angle brackets matching behaviour
 vim.opt.matchpairs:append('<:>')
