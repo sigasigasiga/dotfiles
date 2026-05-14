@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./neovim.nix
     ];
 
   # Bootloader.
@@ -102,10 +103,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.sessionVariables = {
-      EDITOR = "nvim";
-      MANPAGER = "nvim +Man!";
-  };
+  programs.neovim-config.enable = true;
 
   # Install steam
   programs.steam.enable = true;
@@ -121,7 +119,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     python3
-    neovim
     distrobox
     git
     tmux
@@ -133,11 +130,8 @@
     ripgrep
     jq
 
-    nixd # Nix LSP
-    lua-language-server
-    pyright
-
     github-copilot-cli
+    claude-code
 
     gcc
     gdb
@@ -149,7 +143,6 @@
     ninja
 
     rustc
-    rust-analyzer
     cargo
 
     osu-lazer-bin
