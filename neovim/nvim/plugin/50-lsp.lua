@@ -20,7 +20,7 @@ local on_lsp_attach = function(event)
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     assert(client)
-    if client.server_capabilities.documentHighlightProvider then
+    if client:supports_method 'textDocument/documentHighlight' then
         -- number of milliseconds needed for highlight to appear
         vim.opt.updatetime = 250
 
