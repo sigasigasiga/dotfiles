@@ -160,3 +160,12 @@ vim.api.nvim_create_user_command(
     function(params) set_codestyle(codestyles[params.args]) end,
     { nargs = 1 }
 )
+
+-- opens current buffer as a terminal buffer
+-- useful for log files that contain ANSI terminal sequences
+-- see `:h nvim_open_term` for more info
+vim.api.nvim_create_user_command(
+    'TermHl',
+    function() vim.api.nvim_open_term(0, {}) end,
+    { desc = 'Highlights ANSI termcodes in curbuf' }
+)
