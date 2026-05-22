@@ -1,2 +1,3 @@
 theme = dark:Gruvbox Dark Hard,light:Catppuccin Latte
 font-feature = -calt, -liga, -dlig
+keybind = ctrl+enter=unbind
