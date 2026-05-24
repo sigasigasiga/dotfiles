@@ -9,7 +9,9 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
+  # Early KMS: bring up the Lunar Lake (Xe2) GPU in the initrd so external
+  # displays are active during the LUKS prompt and kernel boot screen.
+  boot.initrd.kernelModules = [ "xe" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
