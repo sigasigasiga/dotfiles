@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
       ./neovim.nix
       ./bitwarden.nix
+      ./desktop.nix
     ];
 
   # Bootloader.
@@ -48,40 +49,13 @@
     LC_TIME = "ru_RU.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-
-  services.gnome.gnome-keyring.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us,ru";
-    variant = "";
-    options = "grp:win_space_toggle";
+  siga.desktop = {
+    enable = true;
+    environment = "gnome";
   };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -166,13 +140,6 @@
 
 
     btrfs-progs
-
-    gnomeExtensions.appindicator
-    gnomeExtensions.caffeine
-    gnomeExtensions.hot-edge
-    gnomeExtensions.media-controls
-    gnomeExtensions.removable-drive-menu
-    gnomeExtensions.tiling-assistant
   #  wget
   ];
 
