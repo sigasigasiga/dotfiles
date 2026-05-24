@@ -78,9 +78,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  programs.neovim-config.enable = true;
+  siga.neovim.enable = true;
 
-  programs.bitwarden-config = {
+  siga.bitwarden = {
     enable = true;
     sshAgent = true;
   };

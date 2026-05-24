@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.programs.neovim-config;
+  cfg = config.siga.neovim;
   lspPackages = with pkgs; [
     nixd
     lua-language-server
@@ -19,7 +19,7 @@ let
   };
 in
 {
-  options.programs.neovim-config = {
+  options.siga.neovim = {
     enable = lib.mkEnableOption "neovim";
 
     defaultEditor = lib.mkOption {

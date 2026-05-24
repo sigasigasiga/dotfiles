@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.programs.bitwarden-config;
+  cfg = config.siga.bitwarden;
   sshAuthSock = "$HOME/.bitwarden-ssh-agent.sock";
 in
 {
-  options.programs.bitwarden-config = {
+  options.siga.bitwarden = {
     enable = lib.mkEnableOption "bitwarden-desktop";
 
     sshAgent = lib.mkOption {
