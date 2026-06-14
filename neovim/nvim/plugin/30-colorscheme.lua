@@ -26,6 +26,8 @@ local set_colorscheme = function()
     end
 end
 
+set_colorscheme()
+
 vim.api.nvim_create_autocmd('OptionSet', {
     pattern = 'background',
     callback = function(ev)
