@@ -1,6 +1,8 @@
 require 'vim._core.ui2'.enable()
 
 local options = {
+    -- highlight current line
+    cursorline = true,
     -- numbers on the left
     number = true,
     -- show N lines above/below the cursor
