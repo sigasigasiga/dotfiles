@@ -66,6 +66,7 @@ vim.keymap.set('n', '<Leader>fs',  wrap_telescope_fn('live_grep', grep_args)) --
 -- 'g' -> 'git'
 vim.keymap.set('n', '<Leader>fgf', wrap_telescope_fn('git_files'))            -- 'f' -> 'files'
 vim.keymap.set('n', '<Leader>fgs', wrap_telescope_fn('git_status'))           -- 's' -> 'status'
+vim.keymap.set('n', '<Leader>fgb', wrap_telescope_fn('git_branches'))         -- 'b' -> 'branches'
 
 -- 'c' -> 'code'
 vim.keymap.set('n', '<Leader>fcs', wrap_telescope_fn('lsp_document_symbols'))
