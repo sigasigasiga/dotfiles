@@ -4,14 +4,14 @@ vim.pack.add {
 }
 
 
-local gruvbox_gray = '#504945'
+local gruvbox = require 'gruvbox'
 
-require 'gruvbox'.setup {
+gruvbox.setup {
     contrast = 'hard',
     overrides = {
-        LspReferenceRead = { bg = gruvbox_gray },
-        LspReferenceText = { bg = gruvbox_gray },
-        LspReferenceWrite = { bg = gruvbox_gray },
+        LspReferenceRead = { bg = gruvbox.palette.dark2 },
+        LspReferenceText = { bg = gruvbox.palette.dark2 },
+        LspReferenceWrite = { bg = gruvbox.palette.dark2 },
     },
 }
 
