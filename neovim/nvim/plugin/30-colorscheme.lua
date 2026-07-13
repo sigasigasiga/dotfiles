@@ -12,6 +12,7 @@ gruvbox.setup {
         LspReferenceRead = { bg = gruvbox.palette.dark2 },
         LspReferenceText = { bg = gruvbox.palette.dark2 },
         LspReferenceWrite = { bg = gruvbox.palette.dark2 },
+        CursorLine = { bg = gruvbox.palette.dark0_soft },
     },
 }
 
