@@ -27,6 +27,9 @@ local function build_telescope_fzf_native(path)
     end
 end
 
+-- FIXME: this would not work if the plugin is installed from the lockfile (it always is)
+-- from `:h PackChanged`:
+-- > To act on install from lockfile, run before very first `vim.pack.add()`
 vim.api.nvim_create_autocmd('PackChanged', {
     callback = function(ev)
         local name, kind = ev.data.spec.name, ev.data.kind
