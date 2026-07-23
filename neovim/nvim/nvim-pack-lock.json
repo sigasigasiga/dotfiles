@@ -1,7 +1,7 @@
 {
   "plugins": {
     "catppuccin": {
-      "rev": "e068ab5f8261f23f6f71ffd8791ae40315b77b9c",
+      "rev": "c7c692a0ad3080710893abbae100171819a3e4be",
       "src": "https://github.com/catppuccin/nvim"
     },
     "copilot.vim": {
@@ -33,7 +33,7 @@
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-lspconfig": {
-      "rev": "bfcc0171a43f22afa61d927ffe9fcb6cb85dc99e",
+      "rev": "d592c1e6ad9a0a01b3d5ed3f0345d68407167181",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-surround": {
