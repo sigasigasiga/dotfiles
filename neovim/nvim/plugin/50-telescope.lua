@@ -1,3 +1,10 @@
+vim.pack.add {
+    { src = 'https://github.com/nvim-telescope/telescope.nvim', version = 'v0.2.2' },
+
+    'https://github.com/nvim-lua/plenary.nvim',
+    'https://github.com/nvim-telescope/telescope-fzf-native.nvim',
+}
+
 local function build_telescope_fzf_native(path)
     local opts = {
         cwd = path
@@ -27,24 +34,19 @@ local function build_telescope_fzf_native(path)
     end
 end
 
--- FIXME: this would not work if the plugin is installed from the lockfile (it always is)
+-- build the native library if it's missing, regardless of whether the plugin
+-- was just installed/updated or already present on disk.
+--
+-- `PackChanged` would not work if the plugin is installed from the lockfile (it always is)
 -- from `:h PackChanged`:
 -- > To act on install from lockfile, run before very first `vim.pack.add()`
-vim.api.nvim_create_autocmd('PackChanged', {
-    callback = function(ev)
-        local name, kind = ev.data.spec.name, ev.data.kind
-        if name == 'telescope-fzf-native.nvim' and (kind == 'install' or kind == 'update') then
-            build_telescope_fzf_native(ev.data.path)
-        end
+local fzf_native = vim.pack.get({ 'telescope-fzf-native.nvim' }, { info = false })[1]
+if fzf_native then
+    local fzf_native_installed = #vim.fn.glob(fzf_native.path .. '/build/libfzf.*', false, true) > 0
+    if not fzf_native_installed then
+        build_telescope_fzf_native(fzf_native.path)
     end
-})
-
-vim.pack.add {
-    { src = 'https://github.com/nvim-telescope/telescope.nvim', version = 'v0.2.2' },
-
-    'https://github.com/nvim-lua/plenary.nvim',
-    'https://github.com/nvim-telescope/telescope-fzf-native.nvim',
-}
+end
 
 local telescope = require 'telescope'
 
