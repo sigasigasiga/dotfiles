@@ -1,3 +1,13 @@
+-- highlight selection on yank
+vim.api.nvim_create_autocmd('TextYankPost', {
+    group = vim.api.nvim_create_augroup('siga/yank_highlight', {}),
+    pattern = '*',
+    desc = 'highlight selection on yank',
+    callback = function()
+        vim.hl.on_yank()
+    end,
+})
+
 -- YankRing ( https://x.com/justinmk/status/1911092038109364377 )
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = vim.api.nvim_create_augroup('siga/yankring', {}),
