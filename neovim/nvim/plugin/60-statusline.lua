@@ -1,23 +1,35 @@
 function _G.SigaCurrentGitObject()
-    if not vim.g.loaded_fugitive then
-        return ''
-    end
-
-    local fugitive_statusline = vim.fn.FugitiveStatusline()
+    local fugitive_statusline = vim.g.loaded_fugitive and vim.fn.FugitiveStatusline() or ''
 
     if fugitive_statusline == '' then
         return ''
     end
 
     -- The string is of form `[Git<...>]` and we want to remove the brackets and the `Git` prefix
-    local git_object = string.sub(fugitive_statusline, 5, -2):gsub('%%', '%%%%')
+    local git_object = string.sub(fugitive_statusline, 5, -2)
 
-    return '%#MiniStatuslineModeVisual#' .. git_object .. '%* '
+    return git_object
 end
 
-local statusline_git_expr = '%{%v:lua.SigaCurrentGitObject()%}'
+local function hl_expr(hl, val)
+    return table.concat { '%#', hl, '#', val, '%*' }
+end
 
--- it behaves exactly like the default statusline, except:
--- 1. the visual character number (`%V`) is removed
--- 2. current git object is added
-vim.opt.statusline = '%<' .. statusline_git_expr .. '%f %h%m%r%=%-14.(%l,%c%) %P'
+vim.opt.statusline = table.concat {
+    hl_expr('MiniStatuslineModeVisual', '%{v:lua.SigaCurrentGitObject()}'), -- TODO: truncate it out if there's not enough space
+    ' ',
+    '%f', -- relative path
+    '%<', -- Where to truncate line if too long
+    ' ',
+    '%h', -- `[Help]`
+    '%m', -- modified flag (`[+]`/`[-]`)
+    '%r', -- readonly flag (`[RO]`)
+    '%=', -- align the rest to the right
+    '%-14.(', -- left justify the contents 14 characters
+        '%l', -- line number
+        ',',
+        '%c', -- character number
+    '%)',
+    ' ',
+    '%P', -- percentage through the file of displayed window
+}
