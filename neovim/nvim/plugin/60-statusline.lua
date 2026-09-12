@@ -9,6 +9,14 @@ function expr_builder:new(str)
     return ret
 end
 
+function expr_builder:transform(fn)
+    if self.v ~= '' then
+        self.v = fn(self.v)
+    end
+
+    return self
+end
+
 function expr_builder:trunc(width)
     local cur_width = vim.o.laststatus == 3 and vim.o.columns or vim.api.nvim_win_get_width(0)
     local is_truncated = cur_width < (width or -1)
@@ -21,36 +29,30 @@ function expr_builder:trunc(width)
 end
 
 function expr_builder:hl(hl_name)
-    if self.v ~= '' then
-        self.v = table.concat { '%#', hl_name, '#', self.v, '%*' }
-    end
-
-    return self
+    return self:transform(function(v)
+        return table.concat { '%#', hl_name, '#', v, '%*' }
+    end)
 end
 
 function expr_builder:append_ws()
-    if self.v ~= '' then
-        self.v = self.v .. ' '
-    end
-
-    return self
+    return self:transform(function(v)
+        return v .. ' '
+    end)
 end
 
 function expr_builder:fmt(fmt)
-    if self.v ~= '' then
-        self.v = table.concat {
+    return self:transform(function(v)
+        return table.concat {
             '%',
             (fmt.left_justify and '-') or (fmt.leading_zeroes and '0') or '',
             (fmt.min_width or ''),
             '.',
             (fmt.max_width or ''),
             '(', -- introduces new item group and applies formatting to its content
-            self.v,
+            v,
             '%)', -- ends the item group
         }
-    end
-
-    return self
+    end)
 end
 
 function expr_builder:build()
