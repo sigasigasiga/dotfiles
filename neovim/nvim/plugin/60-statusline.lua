@@ -36,6 +36,23 @@ function expr_builder:append_ws()
     return self
 end
 
+function expr_builder:fmt(fmt)
+    if self.v ~= '' then
+        self.v = table.concat {
+            '%',
+            (fmt.left_justify and '-') or (fmt.leading_zeroes and '0') or '',
+            (fmt.min_width or ''),
+            '.',
+            (fmt.max_width or ''),
+            '(', -- introduces new item group and applies formatting to its content
+            self.v,
+            '%)', -- ends the item group
+        }
+    end
+
+    return self
+end
+
 function expr_builder:build()
     return self.v
 end
@@ -57,10 +74,14 @@ end
 
 function SigaStatusline()
     local git_expr = expr_builder:new(current_git_object())
-            :trunc(40)
-            :hl('MiniStatuslineModeVisual')
-            :append_ws()
-            :build()
+        :trunc(40)
+        :hl('MiniStatuslineModeVisual')
+        :append_ws()
+        :build()
+
+    local location_expr = expr_builder:new('%l,%c') -- `<line>,<column>`
+        :fmt{ left_justify = true, min_width = 14 }
+        :build()
 
     return table.concat {
         git_expr,
@@ -72,11 +93,7 @@ function SigaStatusline()
         '%r', -- readonly flag (`[RO]`)
 
         '%=', -- align the rest to the right
-        '%-14.(', -- left justify the contents 14 characters
-            '%l', -- line number
-            ',',
-            '%c', -- character number
-        '%)',
+        location_expr,
         ' ',
         '%P', -- percentage through the file of displayed window
     }
