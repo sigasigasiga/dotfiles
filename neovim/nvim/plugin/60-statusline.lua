@@ -1,15 +1,4 @@
-local function current_git_object()
-    local fugitive_statusline = vim.g.loaded_fugitive and vim.fn.FugitiveStatusline() or ''
-
-    if fugitive_statusline == '' then
-        return ''
-    end
-
-    -- The string is of form `[Git<...>]` and we want to remove the brackets and the `Git` prefix
-    local git_object = string.sub(fugitive_statusline, 5, -2)
-
-    return git_object
-end
+-- EXPR BUILDER ----------------------------------------------------------------
 
 local expr_builder = {}
 
@@ -50,6 +39,21 @@ end
 function expr_builder:build()
     return self.v
 end
+
+-- EXPR GENERATORS -------------------------------------------------------------
+
+local function current_git_object()
+    local fugitive_status = vim.g.loaded_fugitive and vim.fn.FugitiveStatusline() or ''
+
+    if fugitive_status ~= '' then
+        -- remove `[Git` and `]`
+        fugitive_status = string.sub(fugitive_status, 5, -2)
+    end
+
+    return fugitive_status
+end
+
+-- STATUSLINE ------------------------------------------------------------------
 
 function SigaStatusline()
     local git_expr = expr_builder:new(current_git_object())
