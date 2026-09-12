@@ -87,6 +87,8 @@ function SigaStatusline()
         :append_ws()
         :build()
 
+    -- TODO: `%c` doesn't handle multibyte characters correctly.
+    -- `%v` doesn't handle linebreaks as i'd expect, so it not a great solution either
     local location_expr = expr_builder:new('%l,%c') -- `<line>,<column>`
         :fmt{ left_justify = true, min_width = 14 }
         :build()
