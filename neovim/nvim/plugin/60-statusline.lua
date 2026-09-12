@@ -101,6 +101,7 @@ function SigaStatusline()
         '%<', -- Where to truncate line if too long
         ' ',
         '%h', -- `[Help]`
+        '%w', -- preview window flag (`[Preview]`)
         '%m', -- modified flag (`[+]`/`[-]`)
         '%r', -- readonly flag (`[RO]`)
 
