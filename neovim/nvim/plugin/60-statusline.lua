@@ -73,6 +73,12 @@ end
 -- STATUSLINE ------------------------------------------------------------------
 
 function SigaStatusline()
+    -- TODO: must limit the length of the branch name to something reasonable.
+    -- `:fmt{ max_width = N }` won't do the job because it truncates from the left
+    --
+    -- see
+    -- https://github.com/neovim/neovim/pull/40369
+    -- https://stackoverflow.com/questions/20899651/how-to-truncate-a-vim-statusline-field-from-the-right
     local git_expr = expr_builder:new(current_git_object())
         :trunc(40)
         :hl('MiniStatuslineModeVisual')
