@@ -91,6 +91,10 @@ function SigaStatusline()
         :fmt{ left_justify = true, min_width = 14 }
         :build()
 
+    local diagnostics_expr = expr_builder:new(vim.diagnostic.status())
+        :fmt{ left_justify = true, min_width = 14 }
+        :build()
+
     return table.concat {
         git_expr,
         '%f', -- relative path
@@ -101,6 +105,7 @@ function SigaStatusline()
         '%r', -- readonly flag (`[RO]`)
 
         '%=', -- align the rest to the right
+        diagnostics_expr,
         location_expr,
         ' ',
         '%P', -- percentage through the file of displayed window
