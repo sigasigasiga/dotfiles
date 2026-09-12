@@ -1,4 +1,4 @@
-function SigaCurrentGitObject()
+local function current_git_object()
     local fugitive_statusline = vim.g.loaded_fugitive and vim.fn.FugitiveStatusline() or ''
 
     if fugitive_statusline == '' then
@@ -11,25 +11,55 @@ function SigaCurrentGitObject()
     return git_object
 end
 
-local function hl_expr(hl, val)
-    return table.concat { '%#', hl, '#', val, '%*' }
+local expr_builder = {}
+
+function expr_builder:new(str)
+    local ret = { v = str }
+    setmetatable(ret, self)
+    self.__index = self
+    return ret
 end
 
-local function trunc_expr(trunc_width, expr)
+function expr_builder:trunc(width)
     local cur_width = vim.o.laststatus == 3 and vim.o.columns or vim.api.nvim_win_get_width(0)
-    local is_truncated = cur_width < (trunc_width or -1)
+    local is_truncated = cur_width < (width or -1)
 
     if is_truncated then
-        return ''
-    else
-        return expr
+        self.v = ''
     end
+
+    return self
+end
+
+function expr_builder:hl(hl_name)
+    if self.v ~= '' then
+        self.v = table.concat { '%#', hl_name, '#', self.v, '%*' }
+    end
+
+    return self
+end
+
+function expr_builder:append_ws()
+    if self.v ~= '' then
+        self.v = self.v .. ' '
+    end
+
+    return self
+end
+
+function expr_builder:build()
+    return self.v
 end
 
 function SigaStatusline()
+    local git_expr = expr_builder:new(current_git_object())
+            :trunc(40)
+            :hl('MiniStatuslineModeVisual')
+            :append_ws()
+            :build()
+
     return table.concat {
-        trunc_expr(40, hl_expr('MiniStatuslineModeVisual', '%{v:lua.SigaCurrentGitObject()}')),
-        trunc_expr(40, ' '),
+        git_expr,
         '%f', -- relative path
         '%<', -- Where to truncate line if too long
         ' ',
