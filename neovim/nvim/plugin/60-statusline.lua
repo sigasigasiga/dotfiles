@@ -34,10 +34,14 @@ function expr_builder:hl(hl_name)
     end)
 end
 
-function expr_builder:append_ws()
+function expr_builder:append(expr)
     return self:transform(function(v)
-        return v .. ' '
+        return v .. expr
     end)
+end
+
+function expr_builder:append_ws()
+    return self:append(' ')
 end
 
 function expr_builder:fmt(fmt)
