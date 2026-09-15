@@ -7,6 +7,9 @@ vim.keymap.set('n', 'gr', '', { noremap = true, silent = true })
 
 vim.lsp.config('*', {})
 
+-- each autocmd which operates on a buffer should belong to this augroup
+local lsp_buf_augroup = vim.api.nvim_create_augroup('siga/lsp/buf', { clear = false })
+
 local on_lsp_attach = function(event)
     local bufnr = event.buf
 
@@ -24,20 +27,16 @@ local on_lsp_attach = function(event)
         -- number of milliseconds needed for highlight to appear
         vim.opt.updatetime = 250
 
-        -- `on_lsp_attach` is executed each time a new buffer is spawned.
-        -- we create a new autocommand for each buffer separately,
-        -- because of that we should never clear `siga/lsp/document_highlight` augroup
-        local lsp_highlight_group = vim.api.nvim_create_augroup('siga/lsp/document_highlight', { clear = false })
         vim.api.nvim_create_autocmd('CursorHold', {
             callback = vim.lsp.buf.document_highlight,
             buffer = bufnr,
-            group = lsp_highlight_group,
+            group = lsp_buf_augroup,
             desc = 'Document highlight',
         })
         vim.api.nvim_create_autocmd('CursorMoved', {
             callback = vim.lsp.buf.clear_references,
             buffer = bufnr,
-            group = lsp_highlight_group,
+            group = lsp_buf_augroup,
             desc = 'Clear all the references',
         })
     end
@@ -50,6 +49,14 @@ end
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('siga/lsp/server_attach', {}),
     callback = on_lsp_attach
+})
+
+vim.api.nvim_create_autocmd('LspDetach', {
+    group = vim.api.nvim_create_augroup('siga/lsp/server_detach', {}),
+    callback = function(event)
+        local bufnr = event.buf
+        vim.api.nvim_clear_autocmds { buffer = bufnr, group = lsp_buf_augroup }
+    end
 })
 
 vim.lsp.enable {
