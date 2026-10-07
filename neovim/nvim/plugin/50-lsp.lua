@@ -13,6 +13,12 @@ local lsp_buf_augroup = vim.api.nvim_create_augroup('siga/lsp/buf', { clear = fa
 local on_lsp_attach = function(event)
     local bufnr = event.buf
 
+    -- workaround for https://github.com/neovim/neovim/issues/33225
+    -- remove it when the issue is fixed
+    if vim.api.nvim_buf_get_name(bufnr):match "^%a+://" then
+        return
+    end
+
     -- Enable completion triggered by <C-x><C-o>
     vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
