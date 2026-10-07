@@ -47,7 +47,7 @@ local on_lsp_attach = function(event)
         })
     end
 
-    if client:supports_method 'textDocument/switchSourceHeader' then
+    if client.name == 'clangd' then
         vim.keymap.set('n', 'grs', vim.cmd.LspClangdSwitchSourceHeader, bufopts) -- 's' -> switch
     end
 end
