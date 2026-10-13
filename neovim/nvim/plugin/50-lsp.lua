@@ -23,13 +23,22 @@ local on_lsp_attach = function(event)
     vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
     local bufopts = { noremap = true, silent = true, buf = bufnr }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set({'n', 'i'}, '<C-s>', vim.lsp.buf.signature_help, bufopts) -- 's' -> signature
-
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     assert(client)
-    if client:supports_method 'textDocument/documentHighlight' then
+
+    if client:supports_method('textDocument/declaration', bufnr) then
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+    end
+
+    if client:supports_method('textDocument/definition', bufnr) then
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+    end
+
+    if client:supports_method('textDocument/signatureHelp', bufnr) then
+        vim.keymap.set({'n', 'i'}, '<C-s>', vim.lsp.buf.signature_help, bufopts) -- 's' -> signature
+    end
+
+    if client:supports_method('textDocument/documentHighlight', bufnr) then
         -- number of milliseconds needed for highlight to appear
         vim.opt.updatetime = 250
 
