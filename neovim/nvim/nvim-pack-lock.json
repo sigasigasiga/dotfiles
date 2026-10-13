@@ -41,7 +41,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-switch": {
-      "rev": "f1afc9bb3cd47d85e1472c56886be68575260b9c",
+      "rev": "a850514efcbdbae68cdc85d120c9367a24182332",
       "src": "https://github.com/sigasigasiga/nvim-switch"
     },
     "plenary.nvim": {

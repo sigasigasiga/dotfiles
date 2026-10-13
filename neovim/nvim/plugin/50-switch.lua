@@ -11,6 +11,12 @@ vim.api.nvim_create_user_command(
 )
 
 vim.api.nvim_create_user_command(
+    'AltTab',
+    function(args) switch.pick_recent(args.bang) end,
+    { bang = true, desc = 'Switch UI to the most recently accessed Nvim server (! stops current server if unused)' }
+)
+
+vim.api.nvim_create_user_command(
     'SetInstanceName',
     function(args) switch.instance_name = args.args end,
     { nargs = 1, desc = 'Set the current Nvim server instance name' }
