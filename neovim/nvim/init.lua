@@ -102,7 +102,7 @@ local codestyles = {
 
 local set_codestyle = function(style)
     for k, v in pairs(style) do
-        vim.opt[k] = v
+        vim.opt_local[k] = v
     end
 end
 
