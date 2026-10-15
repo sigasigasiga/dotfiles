@@ -100,19 +100,19 @@ local codestyles = {
     }
 }
 
-local set_codestyle = function(style)
+local set_codestyle = function(opt, style)
     for k, v in pairs(style) do
-        vim.opt_local[k] = v
+        opt[k] = v
     end
 end
 
 -- set default codestyle
-set_codestyle(codestyles.drw)
+set_codestyle(vim.opt, codestyles.drw)
 
 -- set codestyle with ease
 vim.api.nvim_create_user_command(
     'SetCodestyle',
-    function(params) set_codestyle(codestyles[params.args]) end,
+    function(params) set_codestyle(vim.opt_local, codestyles[params.args]) end,
     { nargs = 1 }
 )
 
