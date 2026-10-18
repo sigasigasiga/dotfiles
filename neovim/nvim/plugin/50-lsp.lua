@@ -2,77 +2,118 @@ vim.pack.add {
     'https://github.com/neovim/nvim-lspconfig',
 }
 
--- unmap the default behavior of `gr` so that it wouldn't clash with the default lsp mappings
+-- globally unmap the default behavior of `gr` so that it wouldn't clash with the default lsp mappings
 vim.keymap.set('n', 'gr', '', { noremap = true, silent = true })
 
 vim.lsp.config('*', {})
 
--- each autocmd which operates on a buffer should belong to this augroup
-local lsp_buf_augroup = vim.api.nvim_create_augroup('siga/lsp/buf', { clear = false })
+local function others_support(bufnr, client, method)
+    local lsp_clients = vim.lsp.get_clients { bufnr = bufnr, method = method }
 
-local on_lsp_attach = function(event)
-    local bufnr = event.buf
-
-    -- workaround for https://github.com/neovim/neovim/issues/33225
-    -- remove it when the issue is fixed
-    if vim.api.nvim_buf_get_name(bufnr):match "^%a+://" then
-        return
-    end
-
-    -- Enable completion triggered by <C-x><C-o>
-    vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-    local bufopts = { noremap = true, silent = true, buf = bufnr }
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    assert(client)
-
-    if client:supports_method('textDocument/declaration', bufnr) then
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    end
-
-    if client:supports_method('textDocument/definition', bufnr) then
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    end
-
-    if client:supports_method('textDocument/signatureHelp', bufnr) then
-        vim.keymap.set({'n', 'i'}, '<C-s>', vim.lsp.buf.signature_help, bufopts) -- 's' -> signature
-    end
-
-    if client:supports_method('textDocument/documentHighlight', bufnr) then
-        -- number of milliseconds needed for highlight to appear
-        vim.opt.updatetime = 250
-
-        vim.api.nvim_create_autocmd('CursorHold', {
-            callback = vim.lsp.buf.document_highlight,
-            buffer = bufnr,
-            group = lsp_buf_augroup,
-            desc = 'Document highlight',
-        })
-        vim.api.nvim_create_autocmd('CursorMoved', {
-            callback = vim.lsp.buf.clear_references,
-            buffer = bufnr,
-            group = lsp_buf_augroup,
-            desc = 'Clear all the references',
-        })
-    end
-
-    if client.name == 'clangd' then
-        vim.keymap.set('n', 'grs', vim.cmd.LspClangdSwitchSourceHeader, bufopts) -- 's' -> switch
-    end
+    return vim.iter(lsp_clients)
+        :any(function(c) return c.id ~= client.id end)
 end
 
-vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('siga/lsp/server_attach', {}),
-    callback = on_lsp_attach
-})
+local function setup_lsp_detach_handlers(bufnr, augroup, handlers)
+    vim.api.nvim_create_autocmd('LspDetach', {
+        buf = bufnr,
+        group = augroup,
+        callback = function(args)
+            assert(args.buf == bufnr)
 
-vim.api.nvim_create_autocmd('LspDetach', {
-    group = vim.api.nvim_create_augroup('siga/lsp/server_detach', {}),
-    callback = function(event)
-        local bufnr = event.buf
-        vim.api.nvim_clear_autocmds { buffer = bufnr, group = lsp_buf_augroup }
-    end
-})
+            if not vim.api.nvim_buf_is_valid(bufnr) then
+                return
+            end
+
+            local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+            for _, h in ipairs(handlers) do
+                if h.teardown and client:supports_method(h.method, bufnr) and not others_support(bufnr, client, h.method) then
+                    h.teardown(bufnr, client)
+                end
+            end
+        end,
+    })
+end
+
+--- Run setup/teardown callbacks when an LSP method becomes available or
+--- unavailable in a buffer.
+---
+--- setup runs when the first client supporting the method attaches to a
+--- buffer; teardown runs when the last one detaches. Assumes servers don't
+--- register or unregister capabilities dynamically using `client/registerCapability`.
+local function setup_lsp_handlers(handlers)
+    local augroup = vim.api.nvim_create_augroup('siga/lsp/attach_handlers', { clear = true })
+
+    vim.api.nvim_create_autocmd('LspAttach', {
+        group = augroup,
+        callback = function(args)
+            local bufnr = args.buf
+
+            -- workaround for https://github.com/neovim/neovim/issues/33225
+            -- remove it when the issue is fixed
+            if vim.api.nvim_buf_get_name(bufnr):match "^%a+://" then
+                return
+            end
+
+            local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+            for _, h in ipairs(handlers) do
+                if client:supports_method(h.method, bufnr) and not others_support(bufnr, client, h.method) then
+                    h.setup(bufnr, client)
+                end
+            end
+
+            setup_lsp_detach_handlers(bufnr, augroup, handlers)
+        end,
+    })
+end
+
+local function make_keymap_handler(method, modes, keys, cb)
+    return {
+        method = method,
+        setup = function(bufnr) vim.keymap.set(modes, keys, cb, { buf = bufnr }) end,
+        teardown = function(bufnr) vim.keymap.del(modes, keys, { buf = bufnr }) end,
+    }
+end
+
+local function make_document_highlight_handler()
+    local augroup = vim.api.nvim_create_augroup('siga/lsp/documentHighlight', { clear = false })
+
+    return {
+        method = 'textDocument/documentHighlight',
+
+        setup = function(bufnr)
+            -- number of milliseconds needed for highlight to appear
+            vim.opt_local.updatetime = 250
+
+            vim.api.nvim_create_autocmd('CursorHold', {
+                callback = vim.lsp.buf.document_highlight,
+                buffer = bufnr,
+                group = augroup,
+                desc = 'Document highlight',
+            })
+            vim.api.nvim_create_autocmd('CursorMoved', {
+                callback = vim.lsp.buf.clear_references,
+                buffer = bufnr,
+                group = augroup,
+                desc = 'Clear all the references',
+            })
+        end,
+
+        teardown = function(bufnr)
+            vim.lsp.util.buf_clear_references(bufnr)
+            vim.api.nvim_clear_autocmds { buffer = bufnr, group = augroup }
+        end,
+    }
+end
+
+setup_lsp_handlers {
+    make_keymap_handler('textDocument/declaration',          'n',          'gD',      vim.lsp.buf.declaration),
+    make_keymap_handler('textDocument/definition',           'n',          'gd',      vim.lsp.buf.definition),
+    make_keymap_handler('textDocument/signatureHelp',        {'n', 'i'},   '<C-s>',   vim.lsp.buf.signature_help),
+    make_keymap_handler('textDocument/switchSourceHeader',   'n',          'grs',     vim.cmd.LspClangdSwitchSourceHeader),
+
+    make_document_highlight_handler(),
+}
 
 vim.lsp.enable {
     'clangd',
