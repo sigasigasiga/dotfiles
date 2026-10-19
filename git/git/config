@@ -27,4 +27,4 @@
 
 ### project specific configs
 [includeIf "gitdir:/home/egor-bychin/projects/rc/**"]
-    path = .gitconfig.work
+    path = config.work
