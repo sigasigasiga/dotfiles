@@ -14,27 +14,6 @@ local function others_support(bufnr, client, method)
         :any(function(c) return c.id ~= client.id end)
 end
 
-local function setup_lsp_detach_handlers(bufnr, augroup, handlers)
-    vim.api.nvim_create_autocmd('LspDetach', {
-        buf = bufnr,
-        group = augroup,
-        callback = function(args)
-            assert(args.buf == bufnr)
-
-            if not vim.api.nvim_buf_is_valid(bufnr) then
-                return
-            end
-
-            local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-            for _, h in ipairs(handlers) do
-                if h.teardown and client:supports_method(h.method, bufnr) and not others_support(bufnr, client, h.method) then
-                    h.teardown(bufnr, client)
-                end
-            end
-        end,
-    })
-end
-
 --- Run setup/teardown callbacks when an LSP method becomes available or
 --- unavailable in a buffer.
 ---
@@ -61,8 +40,31 @@ local function setup_lsp_handlers(handlers)
                     h.setup(bufnr, client)
                 end
             end
+        end,
+    })
 
-            setup_lsp_detach_handlers(bufnr, augroup, handlers)
+    -- registered once: registering it per attach would stack duplicate handlers
+    -- and run teardown multiple times after re-enabling a client
+    vim.api.nvim_create_autocmd('LspDetach', {
+        group = augroup,
+        callback = function(args)
+            local bufnr = args.buf
+
+            if not vim.api.nvim_buf_is_valid(bufnr) then
+                return
+            end
+
+            -- same workaround as in `LspAttach`: setup never ran for these buffers
+            if vim.api.nvim_buf_get_name(bufnr):match "^%a+://" then
+                return
+            end
+
+            local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+            for _, h in ipairs(handlers) do
+                if h.teardown and client:supports_method(h.method, bufnr) and not others_support(bufnr, client, h.method) then
+                    h.teardown(bufnr, client)
+                end
+            end
         end,
     })
 end
