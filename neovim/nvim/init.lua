@@ -124,3 +124,6 @@ vim.api.nvim_create_user_command(
     function() vim.api.nvim_open_term(0, {}) end,
     { desc = 'Highlights ANSI termcodes in curbuf' }
 )
+
+-- Go to the command mode and then return back to the terminal
+vim.keymap.set('t', [[<C-\>:]], [[<C-\><C-o>:]])
