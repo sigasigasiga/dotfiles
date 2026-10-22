@@ -127,3 +127,4 @@ vim.api.nvim_create_user_command(
 
 -- Go to the command mode and then return back to the terminal
 vim.keymap.set('t', [[<C-\>:]], [[<C-\><C-o>:]])
+vim.keymap.set('t', [[<C-\>;]], [[<C-\><C-o>:]])
