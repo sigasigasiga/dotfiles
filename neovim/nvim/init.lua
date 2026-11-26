@@ -113,7 +113,15 @@ set_codestyle(vim.opt, codestyles.drw)
 vim.api.nvim_create_user_command(
     'SetCodestyle',
     function(params) set_codestyle(vim.opt_local, codestyles[params.args]) end,
-    { nargs = 1 }
+    {
+        nargs = 1,
+        complete = function(arg_lead)
+            return vim.iter(codestyles)
+                :map(function(k, _) return k end)
+                :filter(function(k) return vim.startswith(k, arg_lead) end)
+                :totable()
+        end
+    }
 )
 
 -- opens current buffer as a terminal buffer
